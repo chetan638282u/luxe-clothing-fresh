@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useStore, removeFromCheckoutByName, incrementInCheckout, decrementFromCheckout, clearBag, showToast } from '../../hooks/store'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 export default function CheckoutPage({ onClose }) {
-  const isMobile = window.innerWidth < 768
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const items = useStore(state => state.checkoutItems)
   const [placed, setPlaced] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', address: '', card: '', expiry: '', cvc: '' })
@@ -66,6 +67,7 @@ export default function CheckoutPage({ onClose }) {
         exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
         transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[60] overflow-y-auto bg-deep pt-28 pb-32 px-6"
+      style={{ contain: 'paint layout', willChange: 'transform' }}
       >
         <div className="flex flex-col items-center justify-center py-32 text-center">
           <motion.div
@@ -93,6 +95,7 @@ export default function CheckoutPage({ onClose }) {
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[60] overflow-y-auto bg-deep pt-28 pb-32 px-6"
+      style={{ contain: 'paint layout', willChange: 'transform' }}
       data-lenis-prevent="true"
     >
       <div className="max-w-7xl mx-auto">

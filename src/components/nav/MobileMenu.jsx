@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { scrollToAnchor } from '../../utils/scroll'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 const links = [
   { label: 'Home', href: '#hero' },
@@ -36,12 +37,13 @@ const linkVariants = {
 }
 
 export default function MobileMenu({ open, onClose }) {
-  const isMobile = window.innerWidth < 768
+  const isMobile = useMediaQuery('(max-width: 767px)')
   return (
     <AnimatePresence>
       {open && (
         <motion.div
           className="fixed inset-0 z-40 flex flex-col items-center justify-center glass"
+          style={{ contain: 'paint layout', willChange: 'transform' }}
           variants={overlayVariants}
           initial="hidden"
           animate="visible"

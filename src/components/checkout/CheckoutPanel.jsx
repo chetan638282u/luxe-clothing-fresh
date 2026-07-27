@@ -45,7 +45,7 @@ export default function CheckoutPanel({ open, onClose }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', contain: 'paint layout', willChange: 'transform' }}
           onClick={onClose}
         >
           <motion.div
@@ -53,7 +53,7 @@ export default function CheckoutPanel({ open, onClose }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="bg-charcoal rounded-xl w-full max-w-lg max-h-[90dvh] border border-white/10 grid grid-rows-[auto_1fr] overflow-hidden"
+            className="bg-charcoal rounded-xl w-full max-w-lg max-h-[calc(100vw*1.6)] border border-white/10 grid grid-rows-[auto_1fr] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-5 border-b border-white/10 shrink-0">

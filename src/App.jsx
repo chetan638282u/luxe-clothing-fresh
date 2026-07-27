@@ -132,7 +132,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-deep text-ivory font-sans">
+    <div className="min-h-screen bg-deep text-ivory font-sans" style={{ contain: 'paint layout', willChange: 'transform' }}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

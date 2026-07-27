@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Sparkles, Environment } from '@react-three/drei'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 export default function Hero3D() {
-  const sparklesCount = useMemo(() => {
-    return window.innerWidth < 1024 ? 15 : 25
-  }, [])
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const sparklesCount = useMemo(() => isDesktop ? 25 : 15, [isDesktop])
 
   return (
     <Canvas

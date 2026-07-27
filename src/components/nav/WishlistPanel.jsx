@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useStore, toggleWishlist, addToBag, showToast } from '../../hooks/store'
 
 export default function WishlistPanel({ open, onClose }) {
-  const isMobile = window.innerWidth < 768
   const items = useStore(state => state.wishlist)
 
   return (
@@ -24,6 +22,7 @@ export default function WishlistPanel({ open, onClose }) {
             exit={{ x: '100%', pointerEvents: 'none' }}
             transition={{ type: 'spring', damping: 28, stiffness: 300 }}
             className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-white/10 flex flex-col"
+            style={{ contain: 'paint layout', willChange: 'transform' }}
           >
             <div className="flex items-center justify-between p-5 border-b border-white/10">
               <h2 className="font-heading text-lg text-ivory tracking-wide">

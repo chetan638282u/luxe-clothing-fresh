@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { addToBag, toggleWishlist, isWishlisted, showToast } from '../../hooks/store'
 import ProductDetail from '../women/ProductDetail'
 import { accessoriesProducts as products } from '../../data/catalog'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 function ProductCard({ product, onSelect, hovered, onHover }) {
   const wishlisted = isWishlisted(product.name)
@@ -89,7 +90,7 @@ function ProductCardWrapper({ product, onSelect }) {
 }
 
 export default function AccessoriesCollection({ onClose, hash }) {
-  const isMobile = window.innerWidth < 768
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const [selectedProduct, setSelectedProduct] = useState(null)
 
 
@@ -116,6 +117,7 @@ export default function AccessoriesCollection({ onClose, hash }) {
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[60] overflow-y-auto bg-deep pt-28 pb-16 px-6"
+      style={{ contain: 'paint layout', willChange: 'transform' }}
       data-lenis-prevent="true"
     >
       <div className="max-w-7xl mx-auto">

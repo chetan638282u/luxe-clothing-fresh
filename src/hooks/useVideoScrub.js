@@ -28,8 +28,8 @@ export default function useVideoScrub() {
       if (loaded + errored === TOTAL_FRAMES) {
         const canvas = canvasRef.current
         if (canvas) {
-          canvas.width = window.innerWidth
-          canvas.height = window.innerHeight
+          canvas.width = document.documentElement.clientWidth
+          canvas.height = canvas.width * 1.5
           ctxRef.current = canvas.getContext('2d')
         }
         const img = allImagesRef.current[sampleIndices[0]]

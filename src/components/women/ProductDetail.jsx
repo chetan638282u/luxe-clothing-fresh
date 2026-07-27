@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { addToBag, toggleWishlist, isWishlisted, showToast, setCheckoutItems } from '../../hooks/store'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL']
 
 export default function ProductDetail({ product, onClose }) {
-  const isMobile = window.innerWidth < 768
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const [selectedSize, setSelectedSize] = useState('M')
   const [qty, setQty] = useState(1)
 
@@ -29,7 +30,7 @@ export default function ProductDetail({ product, onClose }) {
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.2 }}
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', contain: 'paint layout', willChange: 'transform' }}
       onClick={onClose}
     >
       <motion.div
@@ -37,7 +38,7 @@ export default function ProductDetail({ product, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, scale: 0.92, y: 20 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[90dvh] border border-white/10 flex flex-col md:flex-row"
+        className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[calc(100vw*1.6)] border border-white/10 flex flex-col md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full md:w-[55%] min-h-[300px] md:min-h-[500px] overflow-hidden">
