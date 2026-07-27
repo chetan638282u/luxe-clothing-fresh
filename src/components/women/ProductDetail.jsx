@@ -38,7 +38,7 @@ export default function ProductDetail({ product, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, scale: 0.92, y: 20 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[min(85dvh,calc(100vw*1.6))] border border-white/10 flex flex-col md:flex-row"
+        className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[calc(100vw*1.6)] md:max-h-[85vh] border border-white/10 flex flex-col md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full md:w-[55%] min-h-[300px] md:min-h-[500px] overflow-hidden">

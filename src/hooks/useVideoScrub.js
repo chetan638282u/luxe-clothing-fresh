@@ -31,7 +31,7 @@ export default function useVideoScrub() {
         if (canvas) {
           const rect = section?.getBoundingClientRect()
           canvas.width = rect?.width || document.documentElement.clientWidth
-          canvas.height = rect?.height || canvas.width * 1.5
+          canvas.height = rect?.height || canvas.width * (document.documentElement.clientHeight / document.documentElement.clientWidth)
           ctxRef.current = canvas.getContext('2d')
         }
         const img = allImagesRef.current[sampleIndices[0]]

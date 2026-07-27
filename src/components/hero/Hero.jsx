@@ -17,7 +17,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative bg-deep min-h-[100dvh] overflow-hidden"
+      className="relative bg-deep aspect-[9/16] md:aspect-auto md:min-h-screen overflow-hidden"
       style={{ contain: 'paint layout' }}
     >
       <HeroScrub canvasRef={canvasRef} isReady={isReady} />
