@@ -77,7 +77,7 @@ function ProductCard({ product, onSelect, hovered, onHover }) {
 
 function ProductRow({ title, items, onSelect }) {
   return (
-    <div className="mb-16">
+    <div className="mb-16 last:mb-0">
       <h3 className="font-heading text-2xl md:text-3xl text-gold mb-8 tracking-wide">
         {title}
       </h3>
@@ -143,7 +143,7 @@ export default function WomenCollection({ onClose, hash }) {
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0">
-        <div className="max-w-7xl mx-auto pb-8">
+        <div className="max-w-7xl mx-auto">
           <ProductRow title="Winter Collection" items={winter} onSelect={handleSelect} />
           <ProductRow title="Summer Collection" items={summer} onSelect={handleSelect} />
         </div>
