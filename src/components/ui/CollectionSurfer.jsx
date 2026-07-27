@@ -166,7 +166,7 @@ function Card({
         <motion.div
             ref={ref}
             onClick={onSelect}
-            className="absolute w-[300px] h-[400px] bg-charcoal overflow-hidden shadow-2xl transition-colors duration-500 ease-out group cursor-pointer"
+            className="absolute w-[clamp(220px,70vw,300px)] h-[clamp(300px,90vw,400px)] bg-charcoal overflow-hidden shadow-2xl transition-colors duration-500 ease-out group cursor-pointer"
             style={{
                 transform,
                 transformStyle: "preserve-3d",
@@ -185,9 +185,14 @@ function Card({
                 />
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <h3 className="font-heading text-lg text-ivory mb-1">{item.name}</h3>
-                <p className="text-gold text-sm tracking-wide">{item.price}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="text-ivory/60 text-[10px] tracking-widest uppercase mb-1">{item.category || "Apparel"}</p>
+                <h3 className="font-heading text-lg text-ivory mb-1 leading-tight">{item.name}</h3>
+                <p className="text-gold text-sm tracking-wide mb-4">{item.price}</p>
+                
+                <div className="w-full py-2.5 glass border border-white/10 flex items-center justify-center pointer-events-auto transition-colors hover:bg-white/10">
+                    <span className="text-xs tracking-[0.2em] uppercase text-ivory/90 font-medium">Shop Now</span>
+                </div>
             </div>
         </motion.div>
     );
