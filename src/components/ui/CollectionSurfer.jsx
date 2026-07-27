@@ -1,29 +1,51 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 
-export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, title = "COLLECTION", subtitle = "" }) {
-    const duplicatedItems = [...items, ...items];
+export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, title = "COLLECTION", subtitle = "", pageScroll = false }) {
+    // If we are doing a page scroll, we don't need to duplicate items for an infinite loop.
+    const displayItems = pageScroll ? items : [...items, ...items];
+    
+    // Internal scrolling vars
     const scrollPerItem = 600;
     const loopDistance = items.length * scrollPerItem;
 
     const scrollRef = useRef(null);
-    const { scrollY } = useScroll({ container: scrollRef });
+    
+    // Use target: scrollRef for pageScroll, or container: scrollRef for modal/internal scroll
+    const { scrollY, scrollYProgress } = useScroll(
+        pageScroll 
+            ? { target: scrollRef, offset: ["start start", "end end"] } 
+            : { container: scrollRef }
+    );
 
-    const smoothScroll = useSpring(scrollY, {
-        mass: 0.1,
-        stiffness: 100,
-        damping: 20
-    });
-
-    const loopedProgress = useTransform(smoothScroll, (value) => value % loopDistance);
+    const smoothScroll = useSpring(scrollY, { mass: 0.1, stiffness: 100, damping: 20 });
+    const smoothProgress = useSpring(scrollYProgress, { mass: 0.1, stiffness: 100, damping: 20 });
 
     const stepX = 240;
     const stepY = -84;
     const stepZ = -288;
 
-    const x = useTransform(loopedProgress, [0, loopDistance], [0, -items.length * stepX]);
-    const y = useTransform(loopedProgress, [0, loopDistance], [0, -items.length * stepY]);
-    const z = useTransform(loopedProgress, [0, loopDistance], [0, -items.length * stepZ]);
+    // --- Page Scroll transforms ---
+    // If pageScroll, we want scrollYProgress 0->1 to move the track enough so all items go past the camera.
+    // To have the last item go off screen, we move it slightly further than items.length.
+    const totalDistX = -(items.length + 1) * stepX;
+    const totalDistY = -(items.length + 1) * stepY;
+    const totalDistZ = -(items.length + 1) * stepZ;
+
+    const pageX = useTransform(smoothProgress, [0, 1], [0, totalDistX]);
+    const pageY = useTransform(smoothProgress, [0, 1], [0, totalDistY]);
+    const pageZ = useTransform(smoothProgress, [0, 1], [0, totalDistZ]);
+
+    // --- Internal Scroll transforms ---
+    const loopedProgress = useTransform(smoothScroll, (value) => value % loopDistance);
+    const loopX = useTransform(loopedProgress, [0, loopDistance], [0, -items.length * stepX]);
+    const loopY = useTransform(loopedProgress, [0, loopDistance], [0, -items.length * stepY]);
+    const loopZ = useTransform(loopedProgress, [0, loopDistance], [0, -items.length * stepZ]);
+
+    // Choose transform based on mode
+    const x = pageScroll ? pageX : loopX;
+    const y = pageScroll ? pageY : loopY;
+    const z = pageScroll ? pageZ : loopZ;
 
     const mouseX = useMotionValue(-10000);
     const mouseY = useMotionValue(-10000);
@@ -41,11 +63,15 @@ export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, t
     };
 
     return (
-        <div ref={scrollRef} className="relative w-full h-full overflow-y-auto overscroll-contain bg-deep text-ivory">
-            <div style={{ height: "50000px" }} className="w-full" />
+        <div 
+            ref={scrollRef} 
+            className={pageScroll ? "relative w-full bg-deep text-ivory" : "relative w-full h-full overflow-y-auto overscroll-contain bg-deep text-ivory"}
+            style={{ height: pageScroll ? `calc(100vh + ${items.length * 800}px)` : '100%' }}
+        >
+            {!pageScroll && <div style={{ height: "50000px" }} className="w-full" />}
 
             <div
-                className="sticky top-0 left-0 w-full h-full overflow-hidden flex items-center justify-center perspective-container"
+                className={`w-full overflow-hidden flex items-center justify-center perspective-container ${pageScroll ? 'sticky top-0 h-screen left-0' : 'sticky top-0 left-0 h-full'}`}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
             >
@@ -81,9 +107,9 @@ export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, t
                             transformStyle: "preserve-3d",
                         }}
                     >
-                        {duplicatedItems.map((item, i) => (
+                        {displayItems.map((item, i) => (
                             <Card
-                                key={`${item.id}-${i}`}
+                                key={`${item.id || item.name}-${i}`}
                                 item={item}
                                 i={i}
                                 totalItems={items.length}
@@ -92,8 +118,9 @@ export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, t
                                 stepZ={stepZ}
                                 mouseX={mouseX}
                                 mouseY={mouseY}
-                                scrollSpring={smoothScroll}
+                                scrollSpring={pageScroll ? smoothProgress : smoothScroll} // Use progress for distance in pageScroll to keep hover effect working correctly... wait, distance from mouse relies on scrollSpring being raw pixels! Let's pass null for pageScroll and disable distance tracking, or pass window.scrollY.
                                 variant={variant}
+                                pageScroll={pageScroll}
                                 onSelect={() => onSelect && onSelect(item)}
                             />
                         ))}
@@ -115,12 +142,14 @@ function Card({
     mouseY,
     scrollSpring,
     variant,
+    pageScroll,
     onSelect
 }) {
     const ref = useRef(null);
 
-    const distance = useTransform([mouseX, mouseY, scrollSpring], ([x, y]) => {
-        if (!ref.current || variant === "simple") return 200;
+    // If pageScroll is true, we disable the mouse proximity effect to keep performance high and avoid complex coordinate mapping
+    const distance = useTransform([mouseX, mouseY], ([x, y]) => {
+        if (!ref.current || variant === "simple" || pageScroll) return 200;
         const rect = ref.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -148,9 +177,9 @@ function Card({
             let scaleValue = 1;
             let upliftValue = 0;
 
-            if (variant === "magnetic") {
+            if (variant === "magnetic" && !pageScroll) {
                 scaleValue = Number(s);
-            } else if (variant === "uplift") {
+            } else if (variant === "uplift" && !pageScroll) {
                 upliftValue = Number(u);
             }
 
@@ -186,12 +215,12 @@ function Card({
             </div>
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-ivory/60 text-[10px] tracking-widest uppercase mb-1">{item.category || "Apparel"}</p>
+                {item.category && <p className="text-ivory/60 text-[10px] tracking-widest uppercase mb-1">{item.category}</p>}
                 <h3 className="font-heading text-lg text-ivory mb-1 leading-tight">{item.name}</h3>
-                <p className="text-gold text-sm tracking-wide mb-4">{item.price}</p>
+                {item.price && <p className="text-gold text-sm tracking-wide mb-4">{item.price}</p>}
                 
                 <div className="w-full py-2.5 glass border border-white/10 flex items-center justify-center pointer-events-auto transition-colors hover:bg-white/10">
-                    <span className="text-xs tracking-[0.2em] uppercase text-ivory/90 font-medium">Shop Now</span>
+                    <span className="text-xs tracking-[0.2em] uppercase text-ivory/90 font-medium">Explore</span>
                 </div>
             </div>
         </motion.div>
