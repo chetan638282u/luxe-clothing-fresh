@@ -136,7 +136,7 @@ export default function AccessoriesCollection({ onClose, hash }) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="flex-1 overflow-y-auto min-h-0 overscroll-contain">
         <div className="max-w-7xl mx-auto">
           <ProductRow items={products} onSelect={handleSelect} />
         </div>

@@ -134,7 +134,7 @@ export default function NewArrivalsCollection({ onClose, hash }) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="flex-1 overflow-y-auto min-h-0 overscroll-contain">
         <div className="max-w-7xl mx-auto">
           <h3 className="font-heading text-2xl md:text-3xl text-gold mb-8 tracking-wide">
             Just In
