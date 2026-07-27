@@ -116,11 +116,11 @@ export default function AccessoriesCollection({ onClose, hash }) {
       animate={{ opacity: 1 }}
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[60] overflow-y-auto bg-deep pt-28 pb-8 px-6"
+      className="fixed inset-0 z-[60] bg-deep flex flex-col px-6"
       style={{ contain: 'paint layout' }}
       data-lenis-prevent="true"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full shrink-0 pt-28">
         <div className="flex items-center justify-between mb-12">
           <button
             onClick={onClose}
@@ -134,8 +134,12 @@ export default function AccessoriesCollection({ onClose, hash }) {
           <h2 className="font-heading text-3xl md:text-4xl text-ivory">Accessories</h2>
           <div className="w-16" />
         </div>
+      </div>
 
-        <ProductRow items={products} onSelect={handleSelect} />
+      <div className="flex-1 overflow-y-auto min-h-0">
+        <div className="max-w-7xl mx-auto pb-8">
+          <ProductRow items={products} onSelect={handleSelect} />
+        </div>
       </div>
 
       <AnimatePresence>
