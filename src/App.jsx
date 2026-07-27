@@ -132,11 +132,12 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-deep text-ivory font-sans" style={{ contain: 'paint layout' }}>
+    <div className="min-h-screen bg-deep text-ivory font-sans">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
+        style={{ contain: 'paint layout' }}
       >
         <Navbar />
         <Hero />
