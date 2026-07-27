@@ -126,7 +126,7 @@ export default function MenCollection({ onClose, hash }) {
       style={{ contain: 'paint layout' }}
       data-lenis-prevent="true"
     >
-      <div className="max-w-7xl mx-auto min-h-full">
+      <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-12">
           <button
             onClick={onClose}
