@@ -116,11 +116,11 @@ export default function AccessoriesCollection({ onClose, hash }) {
       animate={{ opacity: 1 }}
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[60] overflow-y-auto bg-deep pt-28 pb-16 px-6"
-      style={{ contain: 'paint layout', willChange: 'transform' }}
+      className="fixed inset-0 z-[60] overflow-y-auto bg-deep pt-28 pb-8 px-6"
+      style={{ contain: 'paint layout' }}
       data-lenis-prevent="true"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto min-h-full">
         <div className="flex items-center justify-between mb-12">
           <button
             onClick={onClose}

@@ -53,7 +53,7 @@ export default function CheckoutPanel({ open, onClose }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="bg-charcoal rounded-xl w-full max-w-lg max-h-[calc(100vw*1.6)] border border-white/10 grid grid-rows-[auto_1fr] overflow-hidden"
+            className="bg-charcoal rounded-xl w-full max-w-lg max-h-[min(85dvh,calc(100vw*1.6))] border border-white/10 grid grid-rows-[auto_1fr] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-5 border-b border-white/10 shrink-0">

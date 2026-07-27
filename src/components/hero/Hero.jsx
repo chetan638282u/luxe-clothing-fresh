@@ -17,7 +17,8 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative bg-deep h-[calc(100vw*1.5)] lg:h-[calc(100vw*0.5625)] overflow-hidden"
+      className="relative bg-deep min-h-[100dvh] overflow-hidden"
+      style={{ contain: 'paint layout' }}
     >
       <HeroScrub canvasRef={canvasRef} isReady={isReady} />
       
