@@ -9,6 +9,7 @@ export const womenProducts = [
   { id: 8, name: 'Josas Toile Jacket', price: '$45', season: 'summer', image: '/women/women-08.webp', description: 'Toile-print linen jacket with intricate French-village motifs. A cropped silhouette with bracelet-length sleeves for a refined summer layer.' },
   { id: 9, name: 'Linen Relaxed Blazer', price: '$28', season: 'summer', image: '/women/women-09.jpg', description: 'Unstructured linen blazer cut for a relaxed fit. Natural fibre breathes in the heat while keeping a polished, professional edge.' },
   { id: 10, name: 'Cotton Broderie Top', price: '$22', season: 'summer', image: '/women/women-10.jpg', description: 'Light cotton broderie anglaise top with eyelet embroidery details. Puff sleeves and a smocked neckline give it a romantic finish.' },
+  { id: 11, name: 'Silk Pyjama Set', price: '$65', season: 'all', image: '/silk-pyjama-set.jpg', description: 'Luxurious silk pyjama set for ultimate comfort and elegant lounging.' },
 ]
 
 export const menProducts = [
@@ -22,6 +23,7 @@ export const menProducts = [
   { id: 8, name: 'Cashmere Scarf', price: '$28', season: 'winter', image: '/men/men-08.jpg', description: 'Pure cashmere scarf with a subtle herringbone weave. Oversized enough to wrap twice for cosy warmth on winter commutes.' },
   { id: 9, name: 'Leather Biker Jacket', price: '$45', season: 'winter', image: '/men/men-09.webp', description: 'Genuine lambskin leather biker jacket with asymmetric zip closure. Snap-down lapels and quilted shoulder panels give it classic moto attitude.' },
   { id: 10, name: 'Cotton Vest', price: '$28', season: 'winter', image: '/men/men-05.jpg', description: 'Sleeveless cotton vest with a ribbed hem and armholes. A minimalist layering essential for cooler days under a jacket or coat.' },
+  { id: 11, name: 'Casual Men’s Outfit', price: '$55', season: 'all', image: '/a3ee1fae9718c2698206b6a3d66f34c5.jpg', description: 'A relaxed and stylish casual outfit for everyday wear.' },
 ]
 
 export const accessoriesProducts = [
@@ -30,6 +32,7 @@ export const accessoriesProducts = [
   { id: 3, name: 'Pearl Bead Bracelet', price: '$22', image: '/accessories/accessories-03.webp', description: 'Cultured pearl bead bracelet strung on a durable alloy chain. Each pearl is hand-knotted for a classic, timeless silhouette.' },
   { id: 4, name: 'Gold Hoop Earrings', price: '$32', image: '/accessories/accessories-04.avif', description: 'Polished gold-tone hoop earrings with a slim silhouette and hinged snap-back closure. Lightweight enough for all-day wear.' },
   { id: 5, name: 'Gold Drop Earrings', price: '$30', image: '/accessories/accessories-05.jpg', description: 'Gold-tone drop earrings with a delicate teardrop silhouette and French wire backs. An elegant accent for day or evening.' },
+  { id: 6, name: 'Curated Accessories Set', price: '$85', image: '/outfit-Accessories.jpg', description: 'A curated set of essential accessories to complete any look.' },
 ]
 
 export const newArrivalsProducts = [
@@ -43,6 +46,7 @@ export const newArrivalsProducts = [
   { id: 8, name: 'Wool Trousers', price: '$40', image: '/newarrivals/newarrivals-08.jpg', description: 'Flat-front wool trousers with a gentle taper and centre crease. Quarter-lined for shape retention through the seat and thigh.' },
   { id: 9, name: 'Tuxedo Blazer', price: '$50', image: '/newarrivals/newarrivals-09.jpg', description: 'Shawl-lapel tuxedo blazer in barathea wool with a single-button closure. Peak-formal detailing for occasions that call for presence.' },
   { id: 10, name: 'Ribbed Tank Top', price: '$22', image: '/newarrivals/newarrivals-10.jpg', description: 'Ribbed cotton tank top with a scoop neck and fitted silhouette. A silent-luxury essential that disappears under layers or stands alone.' },
+  { id: 11, name: 'Designer Look', price: '$120', image: '/photo-1558769132-cb1aea458c5e.avif', description: 'The latest designer piece freshly arrived for the new season.' },
 ]
 
 export const bestSellersProducts = [

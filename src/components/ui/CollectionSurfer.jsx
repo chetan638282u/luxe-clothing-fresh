@@ -41,7 +41,7 @@ export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, t
     };
 
     return (
-        <div ref={scrollRef} className="relative w-full h-full overflow-y-auto overscroll-contain bg-deep text-ivory">
+        <div ref={scrollRef} className="relative w-full flex-1 min-h-0 overflow-y-auto overscroll-contain bg-deep text-ivory no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div style={{ height: "50000px" }} className="w-full" />
 
             <div
