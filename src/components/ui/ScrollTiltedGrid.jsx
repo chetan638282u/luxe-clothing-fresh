@@ -19,6 +19,8 @@ function GalleryTile({
   onSelect
 }) {
   const tileRef = useRef(null);
+  const hoverTarget = useRef(0);
+  const hoverCurrent = useRef(0);
   const side = index % 2 === 0 ? -1 : 1;
 
   useEffect(() => {
@@ -28,27 +30,51 @@ function GalleryTile({
     let frame = 0;
     const update = () => {
       frame = 0;
+      
+      // Interpolate hover state (0 = normal, 1 = hovered)
+      hoverCurrent.current += (hoverTarget.current - hoverCurrent.current) * 0.15;
+      const hp = hoverCurrent.current;
+
       const rect = tile.getBoundingClientRect();
       const travel = window.innerHeight + rect.height;
       const position = clamp((window.innerHeight - rect.top) / travel);
-      const distance = Math.abs(position - 0.5) * 2;
-      const signed = (position - 0.5) * 2;
+      
+      // Multiply by 2.5 to make transition to center faster and snappier
+      const distance = clamp(Math.abs(position - 0.5) * 2.5);
+      const signed = (position - 0.5) * 2.5;
       const eased = distance * distance * (3 - 2 * distance);
-      const x = side * eased * 18;
-      const y = -signed * eased * 24;
-      const tilt = -signed * maxTilt;
-      const roll = side * signed * 3;
-      const skew = -side * signed * 7;
+      
+      // Base scroll targets
+      const tX = side * eased * 18;
+      const tY = -clamp(signed, -1, 1) * eased * 24;
+      const tTilt = -clamp(signed, -1, 1) * maxTilt;
+      const tRoll = side * clamp(signed, -1, 1) * 3;
+      const tSkew = -side * clamp(signed, -1, 1) * 7;
+      const tBlur = eased * maxBlur;
 
-      tile.style.setProperty("--tile-blur", `${eased * maxBlur}px`);
-      tile.style.setProperty("--tile-brightness", String(1 - eased * 0.5));
-      tile.style.setProperty("--tile-saturation", String(1 - eased * 0.5));
-      tile.style.setProperty("--tile-image-scale", String(1.03 + eased * 0.15));
+      // Blend scroll targets with flat hover targets (hp = 1 means flat)
+      const finalX = tX * (1 - hp);
+      const finalY = tY * (1 - hp);
+      const finalTilt = tTilt * (1 - hp);
+      const finalRoll = tRoll * (1 - hp);
+      const finalSkew = tSkew * (1 - hp);
+      const finalBlur = tBlur * (1 - hp);
+      const finalScale = (1.03 + eased * 0.15) * (1 - hp) + 1.05 * hp;
+      const finalZ = eased * 180 * (1 - hp);
+
+      tile.style.setProperty("--tile-blur", `${finalBlur}px`);
+      tile.style.setProperty("--tile-image-scale", String(finalScale));
       tile.style.setProperty(
         "--tile-transform",
-        `translate3d(${x}%, ${y}%, ${eased * 180}px) rotateX(${tilt}deg) rotateZ(${roll}deg) skewX(${skew}deg)`
+        `translate3d(${finalX}%, ${finalY}%, ${finalZ}px) rotateX(${finalTilt}deg) rotateZ(${finalRoll}deg) skewX(${finalSkew}deg)`
       );
+
+      // Keep loop running if hover interpolation is not finished
+      if (Math.abs(hoverTarget.current - hoverCurrent.current) > 0.001) {
+        schedule();
+      }
     };
+    
     const schedule = () => {
       if (!frame) frame = window.requestAnimationFrame(update);
     };
@@ -59,10 +85,18 @@ function GalleryTile({
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
 
+    // Bind custom hover events directly to avoid React state triggers
+    const handleMouseEnter = () => { hoverTarget.current = 1; schedule(); };
+    const handleMouseLeave = () => { hoverTarget.current = 0; schedule(); };
+    tile.addEventListener('mouseenter', handleMouseEnter);
+    tile.addEventListener('mouseleave', handleMouseLeave);
+
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      tile.removeEventListener('mouseenter', handleMouseEnter);
+      tile.removeEventListener('mouseleave', handleMouseLeave);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, [maxBlur, maxTilt, reduceMotion, side]);
@@ -72,8 +106,6 @@ function GalleryTile({
     borderRadius: rounded,
     perspective,
     "--tile-blur": "0px",
-    "--tile-brightness": 1,
-    "--tile-saturation": 1,
     "--tile-transform": "translate3d(0, 0, 0)",
     "--tile-image-scale": 1.03,
   };
@@ -86,9 +118,9 @@ function GalleryTile({
     >
       <div
         className={cn(
-          "relative w-full h-full overflow-hidden transition-all duration-300",
+          "relative w-full h-full overflow-hidden",
           !reduceMotion &&
-            "[filter:blur(var(--tile-blur))_brightness(var(--tile-brightness))_saturate(var(--tile-saturation))] [transform:var(--tile-transform)] [transform-style:preserve-3d]"
+            "[filter:blur(var(--tile-blur))] [transform:var(--tile-transform)] [transform-style:preserve-3d]"
         )}
         style={{ aspectRatio, borderRadius: rounded }}
       >
@@ -100,7 +132,6 @@ function GalleryTile({
         >
           <ProductCard product={product} onSelect={() => onSelect(product)} />
         </div>
-        <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-black/10" />
       </div>
     </figure>
   );
