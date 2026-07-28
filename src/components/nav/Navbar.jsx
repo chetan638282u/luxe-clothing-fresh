@@ -6,8 +6,10 @@ import NavIcons from './NavIcons'
 import MobileMenu from './MobileMenu'
 import { scrollToAnchor } from '../../utils/scroll'
 import { womenProducts, menProducts, accessoriesProducts, newArrivalsProducts, bestSellersProducts } from '../../data/catalog'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 export default function Navbar() {
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -147,7 +149,13 @@ export default function Navbar() {
         <div className="nav-underline-bar absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gold/30 scale-x-0" />
       </nav>
 
-      <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      {isMobile ? (
+        mobileMenuOpen && <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      ) : (
+        <AnimatePresence>
+          {mobileMenuOpen && <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />}
+        </AnimatePresence>
+      )}
     </header>
   )
 }

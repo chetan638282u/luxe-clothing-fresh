@@ -139,14 +139,23 @@ export default function NewArrivalsCollection({ onClose, hash }) {
         </div>
       </div>
 
-      <AnimatePresence>
-        {selectedProduct && (
+      {isMobile ? (
+        selectedProduct && (
           <ProductDetail
             product={selectedProduct}
             onClose={() => { setSelectedProduct(null); window.history.pushState({}, '', `?view=${hash}`); window.dispatchEvent(new PopStateEvent('popstate')) }}
           />
-        )}
-      </AnimatePresence>
+        )
+      ) : (
+        <AnimatePresence>
+          {selectedProduct && (
+            <ProductDetail
+              product={selectedProduct}
+              onClose={() => { setSelectedProduct(null); window.history.pushState({}, '', `?view=${hash}`); window.dispatchEvent(new PopStateEvent('popstate')) }}
+            />
+          )}
+        </AnimatePresence>
+      )}
     </motion.div>
   )
 }
