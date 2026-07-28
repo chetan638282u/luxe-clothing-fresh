@@ -184,10 +184,10 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-2rem)] h-[480px] max-h-[calc(100vw*1.4-8rem)] md:max-h-[70vh] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-white/10"
-            style={{ backgroundColor: 'rgba(26, 26, 26, 0.96)', contain: 'paint layout', willChange: 'transform' }}
+            className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-2rem)] h-[480px] max-h-[calc(100vw*1.4-8rem)] md:max-h-[70vh] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-black/10"
+            style={{ backgroundColor: 'rgba(235, 231, 224, 0.96)', contain: 'paint layout', willChange: 'transform' }}
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-black/10">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center">
                   <span className="text-gold text-xs font-semibold">J</span>
@@ -222,7 +222,7 @@ export default function Chatbot() {
                         key={q}
                         onClick={() => handleSelect(q)}
                         disabled={loading}
-                        className="text-xs text-ivory/70 border border-white/15 rounded-full px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors disabled:opacity-40"
+                        className="text-xs text-ivory/70 border border-black/15 rounded-full px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors disabled:opacity-40"
                       >
                         {q}
                       </button>
@@ -270,7 +270,7 @@ export default function Chatbot() {
 
             <form
               onSubmit={handleSubmit}
-              className="flex items-center gap-2 px-4 py-3 border-t border-white/10"
+              className="flex items-center gap-2 px-4 py-3 border-t border-black/10"
             >
               <input
                 ref={inputRef}

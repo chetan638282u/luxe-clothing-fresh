@@ -55,8 +55,8 @@ export default function Navbar() {
         animate={{ opacity: scrolled ? 1 : 0 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
         style={{
-          backgroundColor: 'rgba(10, 10, 10, 0.85)',
-          borderColor: 'rgba(255, 255, 255, 0.08)',
+          backgroundColor: 'rgba(217, 212, 199, 0.85)',
+          borderColor: 'rgba(0, 0, 0, 0.08)',
         }}
       />
 
