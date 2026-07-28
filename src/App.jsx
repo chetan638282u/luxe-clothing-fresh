@@ -12,11 +12,7 @@ import NewArrivalsCollection from './components/newarrivals'
 import WishlistPanel from './components/nav/WishlistPanel'
 import CartPanel from './components/nav/CartPanel'
 import CheckoutPage from './components/checkout'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-ScrollTrigger.config({ ignoreMobileResize: true })
 
 function App() {
   const [toast, setToast] = useState({ show: false, message: '' })
@@ -27,6 +23,19 @@ function App() {
   const [wishlistOpen, setWishlistOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [showCheckout, setShowCheckout] = useState(false)
+
+  useEffect(() => {
+    const isOverlayOpen = showWomen || showMen || showAccessories || showNewArrivals || showCheckout || wishlistOpen || cartOpen;
+    if (isOverlayOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen]);
 
   useEffect(() => {
     const handler = (e) => {
