@@ -39,6 +39,18 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const isOverlayOpen = showWomen || showMen || showAccessories || showNewArrivals || showCheckout || wishlistOpen || cartOpen;
+    if (isOverlayOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen]);
+
+  useEffect(() => {
     const syncFromHash = () => {
       const search = new URLSearchParams(window.location.search)
       const view = search.get('view') || ''

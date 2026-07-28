@@ -116,29 +116,29 @@ export default function AccessoriesCollection({ onClose, hash }) {
       animate={{ opacity: 1 }}
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[60] bg-deep flex flex-col px-6"
+      className="fixed inset-0 z-[60] bg-deep overflow-y-auto no-scrollbar"
       style={{ contain: 'paint layout' }}
       data-lenis-prevent="true"
     >
-      <div className="max-w-7xl mx-auto w-full shrink-0 pt-28">
-        <div className="flex items-center justify-between mb-12">
-          <button
-            onClick={onClose}
-            className="flex items-center gap-2 text-ivory/60 hover:text-gold transition-colors text-sm tracking-[0.15em] uppercase"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-            Back
-          </button>
-          <h2 className="font-heading text-3xl md:text-4xl text-ivory">Accessories</h2>
-          <div className="w-16" />
-        </div>
-      </div>
+      <div className="min-h-full flex flex-col px-6">
+        <div className="max-w-7xl mx-auto w-full pt-12 md:pt-16 flex-1 flex flex-col">
+          <div className="flex items-center justify-between mb-8 md:mb-12">
+            <button
+              onClick={onClose}
+              className="flex items-center gap-2 text-ivory/60 hover:text-gold transition-colors text-sm tracking-[0.15em] uppercase"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+              Back
+            </button>
+            <h2 className="font-heading text-3xl md:text-4xl text-ivory">Accessories</h2>
+            <div className="w-16" />
+          </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0 overscroll-contain">
-        <div className="max-w-7xl mx-auto">
-          <ProductRow items={products} onSelect={handleSelect} />
+          <div className="flex-1 pb-16">
+            <ProductRow items={products} onSelect={handleSelect} />
+          </div>
         </div>
       </div>
 
