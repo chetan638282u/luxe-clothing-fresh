@@ -22,8 +22,13 @@ function ProductCard({ product, onSelect, hovered, onHover }) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
+          className={`w-full h-full object-cover transition-transform duration-500 ${
+            product.name === 'Gold Chain Bracelet' 
+              ? 'scale-[1.15] object-right-top group-hover:scale-125' 
+              : 'group-hover:scale-105'
+          }`}
+          loading={product.id <= 4 ? "eager" : "lazy"}
+          fetchPriority={product.id <= 4 ? "high" : "auto"}
         />
       </div>
 

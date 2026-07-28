@@ -26,7 +26,8 @@ function ProductCard({ product, onSelect, hovered, onHover }) {
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
+          loading={product.id <= 4 ? "eager" : "lazy"}
+          fetchPriority={product.id <= 4 ? "high" : "auto"}
         />
       </div>
 
