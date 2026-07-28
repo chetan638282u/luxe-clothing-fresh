@@ -14,8 +14,8 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative bg-deep h-screen w-full overflow-hidden"
-      style={{ contain: 'paint layout' }}
+      className="relative bg-deep w-full overflow-hidden h-[160vw] md:h-[56vw] min-h-[500px]"
+      style={{ contain: 'paint layout', willChange: 'transform' }}
     >
       {/* Background Native Video */}
       <HeroVideo onReady={() => setIsReady(true)} />

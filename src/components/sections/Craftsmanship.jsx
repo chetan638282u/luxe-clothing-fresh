@@ -110,14 +110,14 @@ function ImageSide({ story }) {
 
 function TextSide({ story }) {
   return (
-    <div className="max-w-lg">
-      <h3 className="story-heading font-heading text-2xl md:text-3xl text-ivory mb-6">
+    <div className="max-w-3xl">
+      <h3 className="story-heading font-heading text-5xl md:text-7xl lg:text-8xl text-ivory mb-8 md:mb-12 leading-tight">
         {story.heading}
       </h3>
       {story.paragraphs.map((p, i) => (
         <p
           key={i}
-          className={`story-paragraph font-sans text-ivory/70 leading-relaxed ${i > 0 ? 'mt-4' : ''}`}
+          className={`story-paragraph font-sans text-xl md:text-3xl font-light text-ivory/80 leading-relaxed ${i > 0 ? 'mt-8 md:mt-12' : ''}`}
         >
           {p}
         </p>
