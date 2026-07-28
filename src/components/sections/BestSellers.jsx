@@ -92,7 +92,7 @@ export function ProductCard({ product, onSelect }) {
               addToBag(product)
               showToast(`${product.name} added to Bag`)
             }}
-            className="glass w-full py-2.5 text-xs tracking-[0.2em] uppercase text-ivory hover:text-gold transition-colors font-medium bg-black/40 backdrop-blur-md"
+            className="w-full py-2.5 text-xs tracking-[0.2em] uppercase text-ivory hover:text-gold transition-colors font-medium bg-deep rounded shadow-lg hover:bg-charcoal"
           >
             Add to Bag
           </button>
