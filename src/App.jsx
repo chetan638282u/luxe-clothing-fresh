@@ -145,35 +145,7 @@ function App() {
     }
   }, [])
 
-  const mountTime = useRef(Date.now())
-  const splashHidden = useRef(false)
 
-  useEffect(() => {
-    const hideSplash = () => {
-      if (splashHidden.current) return
-      splashHidden.current = true
-      const splash = document.getElementById('splash')
-      if (splash) {
-        splash.classList.add('hidden')
-        setTimeout(() => splash.remove(), 700)
-      }
-    }
-
-    const onHeroReady = () => {
-      const elapsed = Date.now() - mountTime.current
-      const remaining = Math.max(0, 1800 - elapsed)
-      setTimeout(hideSplash, remaining)
-    }
-
-    window.addEventListener('hero-ready', onHeroReady)
-
-    const fallback = setTimeout(hideSplash, 8000)
-
-    return () => {
-      window.removeEventListener('hero-ready', onHeroReady)
-      clearTimeout(fallback)
-    }
-  }, [])
 
   return (
     <div className="min-h-screen bg-deep text-ivory font-sans">

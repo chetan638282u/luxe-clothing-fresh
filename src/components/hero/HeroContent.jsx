@@ -3,11 +3,11 @@ import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { scrollToAnchor } from '../../utils/scroll'
 
-export default function HeroContent({ isReady }) {
+export default function HeroContent() {
   const ctaRef = useRef(null)
 
   useEffect(() => {
-    if (!isReady || !ctaRef.current) return
+    if (!ctaRef.current) return
 
     gsap.from(ctaRef.current.children, {
       y: 30,
@@ -17,7 +17,7 @@ export default function HeroContent({ isReady }) {
       ease: 'power3.out',
       delay: 0.5,
     })
-  }, [isReady])
+  }, [])
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center pointer-events-none">
@@ -25,7 +25,7 @@ export default function HeroContent({ isReady }) {
       {/* Massive Interlocking Typography */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: isReady ? 1 : 0, scale: isReady ? 1 : 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5, ease: 'easeOut', delay: 0.2 }}
         className="absolute inset-0 flex items-center justify-center overflow-hidden mix-blend-difference pointer-events-none"
       >
