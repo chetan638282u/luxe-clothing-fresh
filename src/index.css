@@ -1,5 +1,5 @@
 html {
-  background: #0a0a0a;
+  background: #faf9f6;
 }
 html, body, #root {
   height: 100%;
@@ -18,20 +18,20 @@ body {
 @import "tailwindcss";
 
 @theme {
-  --color-deep: #0a0a0a;
-  --color-ivory: #f5f2ed;
+  --color-deep: #faf9f6;
+  --color-ivory: #111111;
   --color-gold: #c9a961;
-  --color-charcoal: #1a1a1a;
+  --color-charcoal: #f0eee9;
   --font-heading: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 .nav-underline,
@@ -75,9 +75,9 @@ body {
   background: var(--color-deep, #0a0a0a);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #d4d4d4;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: #a3a3a3;
 }
