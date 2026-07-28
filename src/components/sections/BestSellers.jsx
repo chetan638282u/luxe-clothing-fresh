@@ -108,7 +108,7 @@ export function ProductCard({ product, onSelect }) {
 
   return (
     <div
-      className="product-card group relative aspect-[3/4] overflow-hidden bg-charcoal cursor-pointer"
+      className="product-card group relative aspect-[3/4] w-full h-full overflow-hidden bg-charcoal cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={onSelect}

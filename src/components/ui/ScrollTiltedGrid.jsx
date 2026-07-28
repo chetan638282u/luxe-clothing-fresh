@@ -124,12 +124,7 @@ function GalleryTile({
         )}
         style={{ aspectRatio, borderRadius: rounded }}
       >
-        <div 
-          className={cn(
-            "h-full w-full",
-            !reduceMotion && "[transform:scale(var(--tile-image-scale))]"
-          )}
-        >
+        <div className="h-full w-full">
           <ProductCard product={product} onSelect={() => onSelect(product)} />
         </div>
       </div>
