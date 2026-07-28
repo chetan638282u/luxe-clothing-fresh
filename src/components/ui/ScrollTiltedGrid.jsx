@@ -113,7 +113,7 @@ function GalleryTile({
   return (
     <figure
       ref={tileRef}
-      className={cn("m-0 relative", side > 0 && "pt-12 sm:pt-24")}
+      className={cn("m-0 relative", side > 0 && "max-lg:pt-0 lg:pt-24")}
       style={variables}
     >
       <div
@@ -144,9 +144,9 @@ export function ScrollTiltedGrid({
   rounded = "0rem",
   sectionPadding = "10vh",
   className,
-  onSelect
+  onSelect,
 }) {
-  const reduceMotion = useReducedMotion() ?? false;
+  const reduceMotion = useReducedMotion();
   const cycleLimit = Math.max(1, maxCycles);
   const [cycleCount, setCycleCount] = useState(() =>
     clamp(initialCycles, 1, cycleLimit)
@@ -182,8 +182,8 @@ export function ScrollTiltedGrid({
       aria-label="Scroll-reactive best sellers grid"
     >
       <div
-        className="mx-auto grid w-full max-w-5xl grid-cols-2 items-start gap-x-4 gap-y-16 px-4 sm:gap-x-10 sm:gap-y-28 sm:px-10 lg:gap-x-16"
-        style={{ paddingBlock: sectionPadding }}
+        className="mx-auto grid w-full max-w-5xl grid-cols-1 lg:grid-cols-2 items-start gap-x-4 gap-y-16 px-6 sm:gap-x-10 sm:gap-y-28 sm:px-10 lg:gap-x-16"
+        style={{ paddingBlock: sectionPadding, perspective: perspective ? `${perspective}px` : "none" }}
       >
         {tiles.map(({ cycle, product, index }) => (
           <GalleryTile
