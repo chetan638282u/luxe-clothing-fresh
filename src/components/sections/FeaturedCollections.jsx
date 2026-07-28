@@ -84,7 +84,7 @@ export default function FeaturedCollections() {
             </div>
 
             <div className="absolute bottom-6 left-6 right-6 transition-all duration-400 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0">
-              <div className="w-full py-3.5 text-center bg-black/40 backdrop-blur-md rounded border border-ivory/20 transition-colors group-hover:bg-black/60">
+              <div className="w-full py-3.5 text-center bg-deep rounded transition-colors group-hover:bg-charcoal">
                 <span className="text-ivory font-medium text-xs tracking-[0.2em] uppercase">
                   Explore
                 </span>
