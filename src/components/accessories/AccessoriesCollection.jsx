@@ -113,7 +113,7 @@ export default function AccessoriesCollection({ onClose, hash }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
+      exit={isMobile ? undefined : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[60] bg-deep overflow-y-auto no-scrollbar"
       style={{ contain: 'paint layout' }}
