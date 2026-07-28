@@ -15,6 +15,7 @@ import CheckoutPage from './components/checkout'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
+import { womenProducts, menProducts, accessoriesProducts, newArrivalsProducts, bestSellersProducts } from './data/catalog'
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true })
@@ -37,6 +38,25 @@ function App() {
     }
     window.addEventListener('toast-show', handler)
     return () => window.removeEventListener('toast-show', handler)
+  }, [])
+
+  // Preload all product images to ensure they display instantly when a collection is opened
+  useEffect(() => {
+    const allProducts = [
+      ...womenProducts,
+      ...menProducts,
+      ...accessoriesProducts,
+      ...newArrivalsProducts,
+      ...bestSellersProducts,
+    ]
+    // Extract unique image URLs
+    const imageUrls = [...new Set(allProducts.map(p => p.image))]
+    
+    // Silently preload them in the background
+    imageUrls.forEach(url => {
+      const img = new Image()
+      img.src = url
+    })
   }, [])
 
   useEffect(() => {
