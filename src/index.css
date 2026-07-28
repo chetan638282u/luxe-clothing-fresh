@@ -1,5 +1,5 @@
 html {
-  background: #faf9f6;
+  background: #d9d4c7;
 }
 html, body, #root {
   height: 100%;
@@ -18,10 +18,10 @@ body {
 @import "tailwindcss";
 
 @theme {
-  --color-deep: #faf9f6;
-  --color-ivory: #111111;
-  --color-gold: #c9a961;
-  --color-charcoal: #f0eee9;
+  --color-deep: #d9d4c7;
+  --color-ivory: #1c1b1a;
+  --color-gold: #8c6d46;
+  --color-charcoal: #ebe7e0;
   --font-heading: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
 }
@@ -75,9 +75,9 @@ body {
   background: var(--color-deep, #0a0a0a);
 }
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
+  background: #bcaf9f;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
+  background: #8c6d46;
 }
