@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ProductDetail from '../women/ProductDetail'
 import { accessoriesProducts as products } from '../../data/catalog'
 import useMediaQuery from '../../hooks/useMediaQuery'
-import { CollectionSurfer } from '../ui/CollectionSurfer'
+import { ProductGrid } from '../ui/ProductGrid'
 
 export default function AccessoriesCollection({ onClose, hash }) {
   const isMobile = useMediaQuery('(max-width: 767px)')
@@ -37,7 +37,7 @@ export default function AccessoriesCollection({ onClose, hash }) {
       data-lenis-prevent="true"
     >
       <div className="max-w-7xl mx-auto w-full shrink-0 pt-28 pointer-events-none z-50">
-        <div className="flex items-center justify-between mb-12 pointer-events-auto">
+        <div className="flex items-center justify-between mb-4 pointer-events-auto">
           <button
             onClick={onClose}
             className="flex items-center gap-2 text-ivory/60 hover:text-gold transition-colors text-sm tracking-[0.15em] uppercase"
@@ -51,8 +51,8 @@ export default function AccessoriesCollection({ onClose, hash }) {
         </div>
       </div>
 
-      <div className="absolute inset-0 flex flex-col pt-40 pb-6 px-6">
-          <CollectionSurfer items={products} onSelect={handleSelect} title="ACCESSORIES" subtitle="COLLECTION" />
+      <div className="absolute inset-0 flex flex-col pt-32 pb-6 px-6">
+          <ProductGrid products={products} onSelect={handleSelect} title="ACCESSORIES" subtitle="COLLECTION" />
       </div>
 
       <AnimatePresence>
