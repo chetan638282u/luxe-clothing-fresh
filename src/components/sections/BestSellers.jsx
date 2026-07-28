@@ -63,38 +63,38 @@ export function ProductCard({ product, onSelect }) {
           loading="lazy"
         />
 
-        <button
-          aria-label="Add to wishlist"
-          onClick={(e) => {
-            e.stopPropagation()
-            toggleWishlist(product)
-            showToast(wishlisted ? 'Removed from Wishlist' : 'Added to Wishlist')
-          }}
-          className="absolute top-3 right-3 transition-all duration-300 bg-black/40 rounded-full p-1.5 opacity-0 group-hover:opacity-100 max-lg:opacity-100"
-        >
-          <svg
-            width="18" height="18"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            fill={wishlisted ? '#c9a961' : 'none'}
-            className={wishlisted ? 'text-gold' : 'text-ivory/80 hover:text-gold'}
-          >
-            <path d="M19 14c1.5-1.5 3-3.5 3-6 0-2.8-2.2-5-5-5-1.6 0-3 .7-4 1.8C12 3.7 10.6 3 9 3 6.2 3 4 5.2 4 8c0 2.5 1.5 4.5 3 6l5 5 7-7Z" />
-          </svg>
-        </button>
-
-        <div className="absolute bottom-4 left-4 right-4 transition-all duration-300 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0">
+        <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0">
           <button
             onClick={(e) => {
               e.stopPropagation()
               addToBag(product)
               showToast(`${product.name} added to Bag`)
             }}
-            className="w-full py-2.5 text-xs tracking-[0.2em] uppercase text-ivory hover:text-gold transition-colors font-medium bg-deep rounded shadow-lg hover:bg-charcoal"
+            className="flex-1 py-2.5 text-xs tracking-[0.2em] uppercase text-ivory hover:text-gold transition-colors font-medium bg-deep rounded shadow-lg hover:bg-charcoal"
           >
             Add to Bag
+          </button>
+
+          <button
+            aria-label="Add to wishlist"
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleWishlist(product)
+              showToast(wishlisted ? 'Removed from Wishlist' : 'Added to Wishlist')
+            }}
+            className="w-10 h-10 flex shrink-0 items-center justify-center bg-deep rounded shadow-lg hover:bg-charcoal transition-colors group/wish"
+          >
+            <svg
+              width="18" height="18"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              fill={wishlisted ? '#c9a961' : 'none'}
+              className={wishlisted ? 'text-gold' : 'text-ivory group-hover/wish:text-gold transition-colors'}
+            >
+              <path d="M19 14c1.5-1.5 3-3.5 3-6 0-2.8-2.2-5-5-5-1.6 0-3 .7-4 1.8C12 3.7 10.6 3 9 3 6.2 3 4 5.2 4 8c0 2.5 1.5 4.5 3 6l5 5 7-7Z" />
+            </svg>
           </button>
         </div>
       </div>
