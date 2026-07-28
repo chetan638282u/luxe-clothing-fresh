@@ -77,7 +77,7 @@ export default function FeaturedCollections() {
 
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <div className="transition-transform duration-400 group-hover:-translate-y-16 max-lg:-translate-y-16">
-                <h3 className="font-heading text-2xl text-ivory tracking-wide drop-shadow-md">
+                <h3 className="font-heading text-2xl text-white tracking-wide drop-shadow-md">
                   {item.name}
                 </h3>
               </div>

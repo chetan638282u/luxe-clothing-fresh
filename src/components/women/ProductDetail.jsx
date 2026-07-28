@@ -46,7 +46,7 @@ export default function ProductDetail({ product, onClose }) {
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover ${product.name === 'Gold Chain Bracelet' ? 'scale-[1.15] object-right-top' : ''}`}
           />
           <button
             onClick={(e) => {
