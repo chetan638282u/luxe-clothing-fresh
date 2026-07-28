@@ -1,9 +1,13 @@
 import HeroVideo from './HeroVideo'
 import HeroContent from './HeroContent'
+import { motion } from 'framer-motion'
 
 export default function Hero() {
   return (
-    <section
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5, ease: 'easeOut' }}
       id="hero"
       className="relative bg-deep w-full overflow-hidden h-[160vw] md:h-[56vw] min-h-[500px]"
       style={{ contain: 'paint layout', willChange: 'transform' }}
@@ -18,6 +22,6 @@ export default function Hero() {
       <div className="absolute inset-0 z-50 pointer-events-auto">
         <HeroContent />
       </div>
-    </section>
+    </motion.section>
   )
 }
