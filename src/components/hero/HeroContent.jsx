@@ -27,9 +27,9 @@ export default function HeroContent({ isReady }) {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: isReady ? 1 : 0, scale: isReady ? 1 : 0.95 }}
         transition={{ duration: 1.5, ease: 'easeOut', delay: 0.2 }}
-        className="absolute inset-0 flex items-center justify-center overflow-hidden mix-blend-difference"
+        className="absolute inset-0 flex items-center justify-center overflow-hidden mix-blend-difference pointer-events-none"
       >
-        <h1 className="font-heading text-[12vw] sm:text-[14vw] md:text-[16vw] leading-none text-white select-none whitespace-nowrap tracking-tighter">
+        <h1 className="font-heading text-[12vw] sm:text-[14vw] md:text-[8vw] lg:text-[7vw] xl:text-[6vw] leading-none text-white select-none whitespace-nowrap tracking-widest mt-[-8vh] md:mt-0">
           MAISON
         </h1>
       </motion.div>
