@@ -29,7 +29,7 @@ export default function HeroContent({ isReady }) {
         transition={{ duration: 1.5, ease: 'easeOut', delay: 0.2 }}
         className="absolute inset-0 flex items-center justify-center overflow-hidden mix-blend-difference"
       >
-        <h1 className="font-heading text-[22vw] sm:text-[25vw] md:text-[28vw] leading-none text-white select-none whitespace-nowrap tracking-tighter">
+        <h1 className="font-heading text-[12vw] sm:text-[14vw] md:text-[16vw] leading-none text-white select-none whitespace-nowrap tracking-tighter">
           MAISON
         </h1>
       </motion.div>

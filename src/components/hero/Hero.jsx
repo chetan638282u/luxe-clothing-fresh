@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
-import useVideoLoop from '../../hooks/useVideoLoop'
+import { useEffect, useState } from 'react'
 import HeroVideo from './HeroVideo'
 import HeroContent from './HeroContent'
 
 export default function Hero() {
-  const { canvasRef, isReady } = useVideoLoop(30)
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     if (isReady) {
@@ -18,8 +17,8 @@ export default function Hero() {
       className="relative bg-deep h-screen w-full overflow-hidden"
       style={{ contain: 'paint layout' }}
     >
-      {/* Background Cinematic Loop */}
-      <HeroVideo canvasRef={canvasRef} isReady={isReady} />
+      {/* Background Native Video */}
+      <HeroVideo onReady={() => setIsReady(true)} />
       
       {/* Loading State */}
       {!isReady && (
@@ -32,7 +31,7 @@ export default function Hero() {
         </div>
       )}
 
-      {/* Gradient Overlay (Removed heavy tint to allow true colors to pop for difference blend) */}
+      {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-deep via-transparent to-deep/40 z-10 pointer-events-none" />
 
       {/* Content Layer (Interlocked) */}
