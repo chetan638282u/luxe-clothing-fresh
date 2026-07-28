@@ -84,24 +84,26 @@ export function ProductCard({ product, onSelect }) {
         </svg>
       </button>
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-        <h3 className="font-heading text-sm text-ivory mb-1">{product.name}</h3>
-        <p className="text-gold text-xs tracking-wide">{product.price}</p>
-      </div>
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+        <div className="transition-transform duration-300 group-hover:-translate-y-14 max-lg:-translate-y-14">
+          <h3 className="font-heading text-sm text-ivory mb-2">{product.name}</h3>
+          <p className="inline-block bg-black/60 backdrop-blur-md text-ivory px-2.5 py-1 rounded text-[10px] font-semibold tracking-widest">
+            {product.price}
+          </p>
+        </div>
 
-      <div
-        className="absolute bottom-4 left-4 right-4 transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0"
-      >
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            addToBag(product)
-            showToast(`${product.name} added to Bag`)
-          }}
-          className="glass w-full py-2.5 text-xs tracking-[0.2em] uppercase text-ivory/90 hover:text-gold transition-colors"
-        >
-          Add to Bag
-        </button>
+        <div className="absolute bottom-4 left-4 right-4 transition-all duration-300 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0">
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              addToBag(product)
+              showToast(`${product.name} added to Bag`)
+            }}
+            className="glass w-full py-2.5 text-xs tracking-[0.2em] uppercase text-ivory hover:text-gold transition-colors font-medium bg-black/20"
+          >
+            Add to Bag
+          </button>
+        </div>
       </div>
     </div>
   )

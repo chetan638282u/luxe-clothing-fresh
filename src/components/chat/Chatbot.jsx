@@ -4,10 +4,10 @@ import { getBagItems, getWishlist, getBagCount } from '../../hooks/store'
 import { womenProducts, menProducts, accessoriesProducts, newArrivalsProducts, bestSellersProducts } from '../../data/catalog'
 
 const suggestedQuestions = [
-  'Mujhe ek slim fit blazer chahiye, kya suggestion dogi?',
-  'Meri height 5\'4" hai, kaunsi dress achi lagegi?',
-  'Is website mein latest kya aaya hai?',
-  'Return policy kya hai aapki?',
+  'I need a slim fit blazer, any suggestions?',
+  'I am 5\'4", which dress would look best on me?',
+  'What are the latest new arrivals?',
+  'What is your return policy?',
 ]
 
 function buildSystemPrompt() {
@@ -39,10 +39,11 @@ CUSTOMER:
 ${context}
 
 RULES:
-- Hinglish (Roman Hindi + English mix), max 2 lines per reply
+- Mirror the user's language (Reply in English if they speak English, Hindi if Hindi, Hinglish if Hinglish)
+- Keep replies to a maximum of 2 lines
 - Use exact $ prices from catalog
 - Warm but very brief — like a quick luxury boutique chat
-- Example: "Ji haan, wo blazer $42 ka hai aur aap par bahut elegant lagega. Kya aap try karna chahengi?"`
+- Example: "That blazer is $42 and would look very elegant on you. Would you like to try it?"`
 }
 
 function fmtTime(ts) {
@@ -86,7 +87,7 @@ export default function Chatbot() {
     }
 
     const data = await res.json()
-    return data.reply || 'Maaf kijiye, main abhi jawab nahi de paayi. Kripya dobara koshish karein.'
+    return data.reply || 'I am sorry, I could not process that right now. Please try again.'
   }, [])
 
   const handleSelect = async (question) => {
@@ -213,7 +214,7 @@ export default function Chatbot() {
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <div className="glass p-3 rounded-lg text-ivory/80 text-sm leading-relaxed">
-                    Namaste ji! Main Jessi hoon — aapki personal MAISON concierge. Bataiye, main aapki kaise madad kar sakti hoon? Aapko koi specific product chahiye ya body type ke hisaab se suggestion chahiye?
+                    Hello! I'm Jessi — your personal MAISON concierge. How can I help you today? Are you looking for a specific product or styling advice?
                   </div>
                   <p className="text-ivory/50 text-[11px] tracking-wide uppercase mt-4 mb-2">Quick Questions</p>
                   <div className="flex flex-wrap gap-2">
@@ -277,7 +278,7 @@ export default function Chatbot() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Kuch poochhna chahte hain?" maxLength={500}
+                placeholder="Type your message..." maxLength={500}
                 disabled={loading}
                 className="flex-1 bg-transparent text-ivory text-sm placeholder:text-ivory/30 focus:outline-none focus:ring-1 focus:ring-gold/40 rounded disabled:opacity-40"
               />
