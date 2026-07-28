@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import { addToBag, toggleWishlist, isWishlisted, showToast, setCheckoutItems } from '../../hooks/store'
 import useMediaQuery from '../../hooks/useMediaQuery'
@@ -23,14 +24,14 @@ export default function ProductDetail({ product, onClose }) {
     setTimeout(() => window.dispatchEvent(new Event('open-checkout')), 350)
   }
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', contain: 'paint layout', willChange: 'transform' }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', willChange: 'transform' }}
       onClick={onClose}
     >
       <motion.div
@@ -143,6 +144,7 @@ export default function ProductDetail({ product, onClose }) {
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   )
 }

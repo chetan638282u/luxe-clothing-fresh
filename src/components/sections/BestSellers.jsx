@@ -24,6 +24,14 @@ export default function BestSellers() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (selectedProduct) {
+      const original = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = original }
+    }
+  }, [selectedProduct])
+
   return (
     <>
       <section ref={sectionRef} id="bestsellers" className="relative bg-deep py-24">
