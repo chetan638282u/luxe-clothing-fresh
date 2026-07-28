@@ -1,30 +1,34 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useStore, toggleWishlist, addToBag, showToast } from '../../hooks/store'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 export default function WishlistPanel({ open, onClose }) {
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const items = useStore(state => state.wishlist)
 
-  return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, pointerEvents: 'none' }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[70] bg-black/50"
-            onClick={onClose}
-          />
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%', pointerEvents: 'none' }}
-            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-            className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-white/10 flex flex-col"
-            style={{ contain: 'paint layout', willChange: 'transform' }}
-          >
-            <div className="flex items-center justify-between p-5 border-b border-white/10">
+  const overlay = (
+    <motion.div
+      key="wishlist-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, pointerEvents: 'none' }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-[70] bg-black/50"
+      onClick={onClose}
+    />
+  )
+
+  const drawer = (
+    <motion.div
+      key="wishlist-drawer"
+      initial={{ x: '100%' }}
+      animate={{ x: 0 }}
+      exit={{ x: '100%', pointerEvents: 'none' }}
+      transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+      className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-white/10 flex flex-col"
+      style={{ contain: 'paint layout', willChange: 'transform' }}
+    >
+      <div className="flex items-center justify-between p-5 border-b border-white/10">
               <h2 className="font-heading text-lg text-ivory tracking-wide">
                 Wishlist {items.length > 0 && <span className="text-gold text-sm ml-1">({items.length})</span>}
               </h2>
@@ -96,9 +100,17 @@ export default function WishlistPanel({ open, onClose }) {
                 </div>
               )}
             </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+    </motion.div>
+  )
+
+  if (isMobile) {
+    return open ? <>{overlay}{drawer}</> : null
+  }
+
+  return (
+    <>
+      <AnimatePresence>{open && overlay}</AnimatePresence>
+      <AnimatePresence>{open && drawer}</AnimatePresence>
+    </>
   )
 }
