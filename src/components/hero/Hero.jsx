@@ -1,11 +1,10 @@
 import { useEffect } from 'react'
-import useVideoScrub from '../../hooks/useVideoScrub'
-import HeroScrub from './HeroScrub'
-import Hero3D from './Hero3D'
+import useVideoLoop from '../../hooks/useVideoLoop'
+import HeroVideo from './HeroVideo'
 import HeroContent from './HeroContent'
 
 export default function Hero() {
-  const { sectionRef, canvasRef, isReady } = useVideoScrub()
+  const { canvasRef, isReady } = useVideoLoop(30)
 
   useEffect(() => {
     if (isReady) {
@@ -16,12 +15,13 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      ref={sectionRef}
-      className="relative bg-deep aspect-[9/16] md:aspect-auto md:min-h-screen overflow-hidden"
+      className="relative bg-deep h-screen w-full overflow-hidden"
       style={{ contain: 'paint layout' }}
     >
-      <HeroScrub canvasRef={canvasRef} isReady={isReady} />
+      {/* Background Cinematic Loop */}
+      <HeroVideo canvasRef={canvasRef} isReady={isReady} />
       
+      {/* Loading State */}
       {!isReady && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-deep pointer-events-auto">
           <div className="flex flex-col items-center gap-5">
@@ -32,14 +32,12 @@ export default function Hero() {
         </div>
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-t from-deep/85 via-deep/15 to-deep/40 z-30 pointer-events-none" />
+      {/* Gradient Overlay (Removed heavy tint to allow true colors to pop for difference blend) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-deep via-transparent to-deep/40 z-10 pointer-events-none" />
 
-      <div className="absolute inset-0 hidden md:block z-40 pointer-events-none">
-        <Hero3D />
-      </div>
-
+      {/* Content Layer (Interlocked) */}
       <div className="absolute inset-0 z-50 pointer-events-auto">
-        <HeroContent />
+        <HeroContent isReady={isReady} />
       </div>
     </section>
   )
