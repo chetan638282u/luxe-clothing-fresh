@@ -11,6 +11,7 @@ const summer = products.slice(5, 10)
 function ProductCard({ product, onSelect, hovered, onHover }) {
   const wishlisted = isWishlisted(product.name)
 
+  return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
