@@ -42,8 +42,6 @@ export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, t
 
     return (
         <div ref={scrollRef} className="relative w-full flex-1 min-h-0 overflow-y-auto overscroll-contain bg-deep text-ivory no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div style={{ height: "50000px" }} className="w-full" />
-
             <div
                 className="sticky top-0 left-0 w-full h-full overflow-hidden flex items-center justify-center perspective-container"
                 onMouseMove={handleMouseMove}
@@ -100,6 +98,7 @@ export function CollectionSurfer({ items = [], variant = "magnetic", onSelect, t
                     </motion.div>
                 </div>
             </div>
+            <div style={{ height: "50000px" }} className="w-full" />
         </div>
     );
 }
@@ -166,7 +165,7 @@ function Card({
         <motion.div
             ref={ref}
             onClick={onSelect}
-            className="absolute w-[300px] h-[400px] bg-charcoal overflow-hidden shadow-2xl transition-colors duration-500 ease-out group cursor-pointer"
+            className="absolute w-[300px] h-[400px] -ml-[150px] -mt-[200px] bg-charcoal overflow-hidden shadow-2xl transition-colors duration-500 ease-out group cursor-pointer"
             style={{
                 transform,
                 transformStyle: "preserve-3d",
