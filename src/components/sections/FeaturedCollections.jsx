@@ -73,17 +73,19 @@ export default function FeaturedCollections() {
               loading="lazy"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
 
             <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="font-heading text-xl text-ivory tracking-wide">
-                {item.name}
-              </h3>
+              <div className="transition-transform duration-400 group-hover:-translate-y-16 max-lg:-translate-y-16">
+                <h3 className="font-heading text-2xl text-ivory tracking-wide drop-shadow-md">
+                  {item.name}
+                </h3>
+              </div>
             </div>
 
-            <div className="absolute inset-0 flex items-end p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-400">
-              <div className="glass w-full p-4 rounded">
-                <span className="text-gold text-xs tracking-[0.2em] uppercase">
+            <div className="absolute bottom-6 left-6 right-6 transition-all duration-400 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0">
+              <div className="w-full py-3.5 text-center bg-black/40 backdrop-blur-md rounded border border-ivory/20 transition-colors group-hover:bg-black/60">
+                <span className="text-ivory font-medium text-xs tracking-[0.2em] uppercase">
                   Explore
                 </span>
               </div>

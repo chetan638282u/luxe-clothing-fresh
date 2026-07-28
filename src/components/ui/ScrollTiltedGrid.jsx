@@ -102,7 +102,6 @@ function GalleryTile({
   }, [maxBlur, maxTilt, reduceMotion, side]);
 
   const variables = {
-    aspectRatio,
     borderRadius: rounded,
     perspective,
     "--tile-blur": "0px",
@@ -118,11 +117,11 @@ function GalleryTile({
     >
       <div
         className={cn(
-          "relative w-full h-full overflow-hidden",
+          "relative w-full h-full",
           !reduceMotion &&
             "[filter:blur(var(--tile-blur))] [transform:var(--tile-transform)] [transform-style:preserve-3d]"
         )}
-        style={{ aspectRatio, borderRadius: rounded }}
+        style={{ borderRadius: rounded }}
       >
         <div className="h-full w-full">
           <ProductCard product={product} onSelect={() => onSelect(product)} />
@@ -178,7 +177,7 @@ export function ScrollTiltedGrid({
 
   return (
     <section
-      className={cn("relative w-full overflow-hidden", className)}
+      className={cn("relative w-full", className)}
       aria-label="Scroll-reactive best sellers grid"
     >
       <div
