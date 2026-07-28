@@ -111,7 +111,7 @@ export default function NewArrivalsCollection({ onClose, hash }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={isMobile ? undefined : { opacity: 0, transition: { duration: 0.05 } }}
+      exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.05 } }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[60] bg-deep overflow-y-auto no-scrollbar"
       style={{ contain: 'paint layout' }}

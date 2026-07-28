@@ -37,7 +37,7 @@ export default function ProductDetail({ product, onClose }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.92, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={isMobile ? undefined : { opacity: 0, scale: 0.92, y: 20 }}
+        exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { opacity: 0, scale: 0.92, y: 20 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[calc(100vw*1.6)] md:max-h-[85vh] border border-white/10 flex flex-col md:flex-row"
         onClick={(e) => e.stopPropagation()}
