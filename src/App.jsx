@@ -170,6 +170,19 @@ function App() {
 
   const isMobile = useMediaQuery('(max-width: 767px)')
 
+  return (
+    <div className="min-h-screen bg-deep text-ivory font-sans">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+      >
+        <Navbar />
+        <Hero />
+        <Sections />
+        <Footer />
+      </motion.div>
+
       {isMobile ? (
         <>
           {showWomen && <WomenCollection key="women" hash="women" onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
