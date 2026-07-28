@@ -14,6 +14,7 @@ import CartPanel from './components/nav/CartPanel'
 import CheckoutPage from './components/checkout'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true })
@@ -36,6 +37,37 @@ function App() {
     }
     window.addEventListener('toast-show', handler)
     return () => window.removeEventListener('toast-show', handler)
+  }, [])
+
+  useEffect(() => {
+    // Only enable smooth scrolling on desktop devices
+    if (window.innerWidth < 1024) return
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    })
+
+    lenis.on('scroll', ScrollTrigger.update)
+
+    const scrollFn = (time) => {
+      lenis.raf(time * 1000)
+    }
+
+    gsap.ticker.add(scrollFn)
+    gsap.ticker.lagSmoothing(0)
+
+    return () => {
+      lenis.destroy()
+      gsap.ticker.remove(scrollFn)
+    }
   }, [])
 
   useEffect(() => {
