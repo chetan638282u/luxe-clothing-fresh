@@ -2,6 +2,7 @@ export default function HeroVideo() {
   return (
     <video
       src="/hero-editorial.mp4"
+      poster="/hero-poster.jpg"
       autoPlay
       loop
       muted
