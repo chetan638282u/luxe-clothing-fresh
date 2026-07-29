@@ -94,18 +94,17 @@ export default function NewArrivalsCollection({ onClose, hash }) {
 
   const handleSelect = (product) => {
     setSelectedProduct(product)
-    window.history.pushState(window.history.state || {}, '', `?view=${hash}/detail`)
+    window.history.pushState(window.history.state || {}, '', '#detail')
     window.dispatchEvent(new PopStateEvent('popstate'))
   }
 
   useEffect(() => {
     const onHashChange = () => {
-      const full = new URLSearchParams(window.location.search).get('view') || ''
-      if (full === hash) setSelectedProduct(null)
+      if (!window.location.hash) setSelectedProduct(null)
     }
     window.addEventListener('popstate', onHashChange)
     return () => window.removeEventListener('popstate', onHashChange)
-  }, [hash])
+  }, [])
 
   return (
     <motion.div
@@ -143,7 +142,7 @@ export default function NewArrivalsCollection({ onClose, hash }) {
         selectedProduct && (
           <ProductDetail
             product={selectedProduct}
-            onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState({}, '', `?view=${hash}`), window.dispatchEvent(new PopStateEvent('popstate'))) }}
+            onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState(window.history.state || {}, '', window.location.pathname + window.location.search), window.dispatchEvent(new PopStateEvent('popstate'))) }}
           />
         )
       ) : (
@@ -151,7 +150,7 @@ export default function NewArrivalsCollection({ onClose, hash }) {
           {selectedProduct && (
             <ProductDetail
               product={selectedProduct}
-              onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState({}, '', `?view=${hash}`), window.dispatchEvent(new PopStateEvent('popstate'))) }}
+              onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState(window.history.state || {}, '', window.location.pathname + window.location.search), window.dispatchEvent(new PopStateEvent('popstate'))) }}
             />
           )}
         </AnimatePresence>
