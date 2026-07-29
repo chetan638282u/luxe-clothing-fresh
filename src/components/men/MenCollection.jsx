@@ -152,7 +152,7 @@ export default function MenCollection({ onClose, hash }) {
         selectedProduct && (
           <ProductDetail
             product={selectedProduct}
-            onClose={() => { setSelectedProduct(null); window.history.pushState({}, '', `?view=${hash}`); window.dispatchEvent(new PopStateEvent('popstate')) }}
+            onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState({}, '', `?view=${hash}`), window.dispatchEvent(new PopStateEvent('popstate'))) }}
           />
         )
       ) : (
@@ -160,7 +160,7 @@ export default function MenCollection({ onClose, hash }) {
           {selectedProduct && (
             <ProductDetail
               product={selectedProduct}
-              onClose={() => { setSelectedProduct(null); window.history.pushState({}, '', `?view=${hash}`); window.dispatchEvent(new PopStateEvent('popstate')) }}
+              onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState({}, '', `?view=${hash}`), window.dispatchEvent(new PopStateEvent('popstate'))) }}
             />
           )}
         </AnimatePresence>
