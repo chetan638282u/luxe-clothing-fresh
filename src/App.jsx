@@ -31,6 +31,29 @@ function App() {
   const [cartOpen, setCartOpen] = useState(false)
   const [showCheckout, setShowCheckout] = useState(false)
 
+  // Custom Scroll Restoration to prevent snapping to hero on refresh
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
+    const savedScroll = sessionStorage.getItem('luxe-scroll-position')
+    if (savedScroll) {
+      // Delay slightly to let the DOM calculate full height
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(savedScroll, 10))
+        sessionStorage.removeItem('luxe-scroll-position')
+      }, 100)
+    }
+
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem('luxe-scroll-position', window.scrollY)
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [])
+
   useEffect(() => {
     const handler = (e) => {
       const msg = typeof e.detail === 'string' ? e.detail : ''
