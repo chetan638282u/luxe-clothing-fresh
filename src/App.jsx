@@ -31,7 +31,7 @@ function App() {
   const [cartOpen, setCartOpen] = useState(false)
   const [showCheckout, setShowCheckout] = useState(false)
 
-  // Custom Scroll Restoration to prevent snapping to hero on refresh
+  // Custom Scroll Restoration (Mobile-safe version)
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
@@ -39,19 +39,30 @@ function App() {
 
     const savedScroll = sessionStorage.getItem('luxe-scroll-position')
     if (savedScroll) {
-      // Delay slightly to let the DOM calculate full height
+      // Try restoring immediately
+      window.scrollTo(0, parseInt(savedScroll, 10))
+      // Try again after a delay for slower mobile devices rendering the DOM
       setTimeout(() => {
         window.scrollTo(0, parseInt(savedScroll, 10))
         sessionStorage.removeItem('luxe-scroll-position')
-      }, 100)
+      }, 350)
     }
 
-    const handleBeforeUnload = () => {
-      sessionStorage.setItem('luxe-scroll-position', window.scrollY)
+    // Mobile browsers (iOS Safari) often fail to fire 'beforeunload' on refresh.
+    // Saving the scroll position on a debounced scroll event guarantees it's always up to date.
+    let scrollTimeout
+    const handleScroll = () => {
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
+        sessionStorage.setItem('luxe-scroll-position', window.scrollY)
+      }, 150)
     }
 
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(scrollTimeout)
+    }
   }, [])
 
   useEffect(() => {
