@@ -9,13 +9,7 @@ export default function BestSellers() {
   const sectionRef = useRef(null)
   const [selectedProduct, setSelectedProduct] = useState(null)
 
-  useEffect(() => {
-    if (selectedProduct) {
-      const original = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-      return () => { document.body.style.overflow = original }
-    }
-  }, [selectedProduct])
+  // Removed overflow hidden to prevent layout thrashing
 
   return (
     <>

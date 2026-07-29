@@ -27,9 +27,12 @@ function GalleryTile({
     const tile = tileRef.current;
     if (!tile || reduceMotion) return;
 
+    let isVisible = false;
     let frame = 0;
+    
     const update = () => {
       frame = 0;
+      if (!isVisible && hoverTarget.current === hoverCurrent.current) return;
       
       // Interpolate hover state (0 = normal, 1 = hovered)
       hoverCurrent.current += (hoverTarget.current - hoverCurrent.current) * 0.15;
@@ -76,8 +79,16 @@ function GalleryTile({
     };
     
     const schedule = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
+      if ((isVisible || Math.abs(hoverTarget.current - hoverCurrent.current) > 0.001) && !frame) {
+        frame = window.requestAnimationFrame(update);
+      }
     };
+
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) schedule();
+    }, { rootMargin: "100% 0px" });
+    intersectionObserver.observe(tile);
 
     update();
     const resizeObserver = new ResizeObserver(schedule);
@@ -92,6 +103,7 @@ function GalleryTile({
     tile.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      intersectionObserver.disconnect();
       resizeObserver.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);

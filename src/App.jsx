@@ -125,17 +125,7 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    const isOverlayOpen = showWomen || showMen || showAccessories || showNewArrivals || showCheckout || wishlistOpen || cartOpen;
-    if (isOverlayOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen]);
+  // Removed overflow hidden to prevent ScrollTrigger refresh layout thrashing on mobile
 
   useEffect(() => {
     const syncFromHash = () => {
@@ -223,23 +213,13 @@ function App() {
         <Footer />
       </motion.div>
 
-      {isMobile ? (
-        <>
-          {showWomen && <WomenCollection key="women" hash="women" onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
-          {showMen && <MenCollection key="men" hash="men" onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
-          {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
-          {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
-          {showCheckout && <CheckoutPage key="checkout" onClose={() => window.dispatchEvent(new Event('close-checkout'))} />}
-        </>
-      ) : (
-        <AnimatePresence>
-          {showWomen && <WomenCollection key="women" hash="women" onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
-          {showMen && <MenCollection key="men" hash="men" onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
-          {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
-          {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
-          {showCheckout && <CheckoutPage key="checkout" onClose={() => window.dispatchEvent(new Event('close-checkout'))} />}
-        </AnimatePresence>
-      )}
+      <AnimatePresence>
+        {showWomen && <WomenCollection key="women" hash="women" onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
+        {showMen && <MenCollection key="men" hash="men" onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
+        {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
+        {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
+        {showCheckout && <CheckoutPage key="checkout" onClose={() => window.dispatchEvent(new Event('close-checkout'))} />}
+      </AnimatePresence>
 
       <Chatbot />
 
