@@ -142,11 +142,12 @@ function App() {
       const search = new URLSearchParams(window.location.search)
       const view = search.get('view') || ''
       const hash = view.split('/')[0]
+      const isCheckout = search.get('checkout') === 'true'
       setShowWomen(hash === 'women')
       setShowMen(hash === 'men')
       setShowAccessories(hash === 'accessories')
       setShowNewArrivals(hash === 'newarrivals')
-      setShowCheckout(hash === 'checkout')
+      setShowCheckout(hash === 'checkout' || isCheckout)
       setCartOpen(hash === 'cart')
       setWishlistOpen(hash === 'wishlist')
     }
@@ -170,7 +171,12 @@ function App() {
     const closeNA = () => window.history.back()
     const openWL = () => pushView('wishlist')
     const openCart = () => pushView('cart')
-    const openCheckout = () => pushView('checkout')
+    const openCheckout = () => {
+      const search = new URLSearchParams(window.location.search)
+      search.set('checkout', 'true')
+      window.history.pushState(window.history.state || {}, '', `?${search.toString()}${window.location.hash}`)
+      window.dispatchEvent(new PopStateEvent('popstate'))
+    }
     const closeCheckout = () => window.history.back()
     window.addEventListener('open-women-collection', openW)
     window.addEventListener('close-women-collection', closeW)

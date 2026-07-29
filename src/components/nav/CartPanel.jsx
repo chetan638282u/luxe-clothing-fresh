@@ -109,7 +109,7 @@ export default function CartPanel({ open, onClose }) {
                       </div>
                       <div className="flex items-center shrink-0">
                         <button
-                          onClick={() => { setCheckoutItems(Array.from({ length: item.count }, () => ({ name: item.name, price: item.price, image: item.image }))); onClose(); setTimeout(() => window.dispatchEvent(new Event('open-checkout')), 350) }}
+                          onClick={() => { setCheckoutItems(Array.from({ length: item.count }, () => ({ name: item.name, price: item.price, image: item.image }))); window.dispatchEvent(new Event('open-checkout')) }}
                           className="bg-gold text-deep hover:bg-ivory transition-colors px-3 py-1.5 text-xs tracking-[0.1em] uppercase font-semibold rounded"
                         >
                           Purchase
@@ -124,7 +124,7 @@ export default function CartPanel({ open, onClose }) {
             {items.length > 0 && (
               <div className="shrink-0 p-5 border-t border-white/10">
                 <button
-                  onClick={() => { setCheckoutItems([...items]); onClose(); setTimeout(() => window.dispatchEvent(new Event('open-checkout')), 350) }}
+                  onClick={() => { setCheckoutItems([...items]); window.dispatchEvent(new Event('open-checkout')) }}
                   className="w-full bg-gold text-deep hover:bg-ivory transition-all py-3.5 text-xs tracking-[0.2em] uppercase font-semibold"
                 >
                   Purchase

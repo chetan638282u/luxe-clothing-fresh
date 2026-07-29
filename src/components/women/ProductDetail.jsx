@@ -20,8 +20,7 @@ export default function ProductDetail({ product, onClose }) {
   const handleBuyNow = () => {
     for (let i = 0; i < qty; i++) addToBag(product)
     setCheckoutItems(Array.from({ length: qty }, () => ({ name: product.name, price: product.price, image: product.image })))
-    onClose()
-    setTimeout(() => window.dispatchEvent(new Event('open-checkout')), 350)
+    window.dispatchEvent(new Event('open-checkout'))
   }
 
   return createPortal(
