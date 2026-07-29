@@ -94,7 +94,7 @@ export default function NewArrivalsCollection({ onClose, hash }) {
 
   const handleSelect = (product) => {
     setSelectedProduct(product)
-    window.history.pushState({}, '', `?view=${hash}/detail`)
+    window.history.pushState(window.history.state || {}, '', `?view=${hash}/detail`)
     window.dispatchEvent(new PopStateEvent('popstate'))
   }
 

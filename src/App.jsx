@@ -157,7 +157,7 @@ function App() {
 
   useEffect(() => {
     const pushView = (view) => {
-      window.history.pushState({}, '', `?view=${view}`)
+      window.history.pushState(window.history.state || {}, '', `?view=${view}`)
       window.dispatchEvent(new PopStateEvent('popstate'))
     }
     const openW = () => pushView('women')
