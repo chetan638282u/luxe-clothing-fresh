@@ -141,17 +141,15 @@ function App() {
   }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen])
   useEffect(() => {
     const syncFromHash = () => {
-      const search = new URLSearchParams(window.location.search)
-      const view = search.get('view') || ''
-      const hash = view.split('/')[0]
-      const isCheckout = search.get('checkout') === 'true'
-      setShowWomen(hash === 'women')
-      setShowMen(hash === 'men')
-      setShowAccessories(hash === 'accessories')
-      setShowNewArrivals(hash === 'newarrivals')
-      setShowCheckout(hash === 'checkout' || isCheckout)
-      setCartOpen(hash === 'cart')
-      setWishlistOpen(hash === 'wishlist')
+      const hash = window.location.hash.slice(1)
+      const view = hash.split('?')[0] // handle query params if any
+      setShowWomen(view === 'women')
+      setShowMen(view === 'men')
+      setShowAccessories(view === 'accessories')
+      setShowNewArrivals(view === 'newarrivals')
+      setShowCheckout(view === 'checkout')
+      setCartOpen(view === 'cart')
+      setWishlistOpen(view === 'wishlist')
     }
     
     // Forensic Logs
@@ -174,8 +172,7 @@ function App() {
 
   useEffect(() => {
     const pushView = (view) => {
-      window.history.pushState(window.history.state || {}, '', `?view=${view}`)
-      window.dispatchEvent(new PopStateEvent('popstate'))
+      window.location.hash = view
     }
     const openW = () => pushView('women')
     const closeW = () => window.history.back()
@@ -187,12 +184,7 @@ function App() {
     const closeNA = () => window.history.back()
     const openWL = () => pushView('wishlist')
     const openCart = () => pushView('cart')
-    const openCheckout = () => {
-      const search = new URLSearchParams(window.location.search)
-      search.set('checkout', 'true')
-      window.history.pushState(window.history.state || {}, '', `?${search.toString()}${window.location.hash}`)
-      window.dispatchEvent(new PopStateEvent('popstate'))
-    }
+    const openCheckout = () => pushView('checkout')
     const closeCheckout = () => window.history.back()
     window.addEventListener('open-women-collection', openW)
     window.addEventListener('close-women-collection', closeW)
