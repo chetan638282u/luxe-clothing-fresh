@@ -48,6 +48,14 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
+    const onHashChange = () => {
+      if (!window.location.hash) setSelectedProduct(null)
+    }
+    window.addEventListener('popstate', onHashChange)
+    return () => window.removeEventListener('popstate', onHashChange)
+  }, [])
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.nav-item', {
         y: -12,
@@ -124,6 +132,8 @@ export default function Navbar() {
                        setSelectedProduct(product)
                        setSearchOpen(false)
                        setSearchQuery('')
+                       window.history.pushState(window.history.state || {}, '', '#detail')
+                       window.dispatchEvent(new PopStateEvent('popstate'))
                     }}
                   >
                     <img src={product.image} alt={product.name} className="w-12 h-14 object-cover rounded-sm" />
@@ -158,6 +168,8 @@ export default function Navbar() {
                         setSearchOpen(false)
                         setSearchQuery('')
                         setSearchFeedback('')
+                        window.history.pushState(window.history.state || {}, '', '#detail')
+                        window.dispatchEvent(new PopStateEvent('popstate'))
                       } else if (searchQuery.trim()) {
                         setSearchFeedback('product not exist')
                         setTimeout(() => setSearchFeedback(''), 2000)
@@ -202,7 +214,7 @@ export default function Navbar() {
         {selectedProduct && (
           <ProductDetail
             product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
+            onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState(window.history.state || {}, '', window.location.pathname + window.location.search), window.dispatchEvent(new PopStateEvent('popstate'))) }}
           />
         )}
       </AnimatePresence>
