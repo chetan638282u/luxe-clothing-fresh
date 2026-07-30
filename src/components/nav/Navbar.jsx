@@ -114,12 +114,12 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full right-8 mt-6 w-72 bg-[#1A1A1A] border border-white/10 shadow-2xl rounded-lg overflow-hidden z-[100]"
+                className="absolute top-full right-8 mt-6 w-72 bg-charcoal border border-black/10 shadow-xl rounded-lg overflow-hidden z-[100]"
               >
                 {searchResults.map(product => (
                   <div 
                     key={product.id}
-                    className="flex items-center gap-4 p-3 hover:bg-white/5 cursor-pointer transition-colors border-b border-white/5 last:border-0"
+                    className="flex items-center gap-4 p-3 hover:bg-black/5 cursor-pointer transition-colors border-b border-black/5 last:border-0"
                     onClick={() => {
                        setSelectedProduct(product)
                        setSearchOpen(false)
