@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, startTransition } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useMediaQuery from './hooks/useMediaQuery'
 import Navbar from './components/nav'
@@ -133,17 +133,33 @@ function App() {
       const view = search.get('view') || ''
       const hash = view.split('/')[0]
       const isCheckout = search.get('checkout') === 'true'
-      setShowWomen(hash === 'women')
-      setShowMen(hash === 'men')
-      setShowAccessories(hash === 'accessories')
-      setShowNewArrivals(hash === 'newarrivals')
-      setShowCheckout(hash === 'checkout' || isCheckout)
-      setCartOpen(hash === 'cart')
-      setWishlistOpen(hash === 'wishlist')
+      startTransition(() => {
+        setShowWomen(hash === 'women')
+        setShowMen(hash === 'men')
+        setShowAccessories(hash === 'accessories')
+        setShowNewArrivals(hash === 'newarrivals')
+        setShowCheckout(hash === 'checkout' || isCheckout)
+        setCartOpen(hash === 'cart')
+        setWishlistOpen(hash === 'wishlist')
+      })
     }
+    
+    // Forensic Logs
+    const logEvent = (e) => console.log(`[Forensic] ${e.type} fired at ${performance.now().toFixed(2)}ms`, e)
+    window.addEventListener('pageshow', logEvent)
+    window.addEventListener('pagehide', logEvent)
+    window.addEventListener('popstate', logEvent)
+    document.addEventListener('visibilitychange', logEvent)
+
     syncFromHash()
     window.addEventListener('popstate', syncFromHash)
-    return () => window.removeEventListener('popstate', syncFromHash)
+    return () => {
+      window.removeEventListener('popstate', syncFromHash)
+      window.removeEventListener('pageshow', logEvent)
+      window.removeEventListener('pagehide', logEvent)
+      window.removeEventListener('popstate', logEvent)
+      document.removeEventListener('visibilitychange', logEvent)
+    }
   }, [])
 
   useEffect(() => {

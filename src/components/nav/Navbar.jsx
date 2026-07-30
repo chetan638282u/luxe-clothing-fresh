@@ -125,15 +125,15 @@ export default function Navbar() {
                 className="absolute top-full right-8 mt-6 w-72 bg-charcoal border border-black/10 shadow-xl rounded-lg overflow-hidden z-[100]"
               >
                 {searchResults.map(product => (
-                  <div 
+                  <div
                     key={product.id}
                     className="flex items-center gap-4 p-3 hover:bg-black/5 cursor-pointer transition-colors border-b border-black/5 last:border-0"
                     onClick={() => {
-                       setSelectedProduct(product)
-                       setSearchOpen(false)
-                       setSearchQuery('')
-                       window.history.pushState(window.history.state || {}, '', '#detail')
-                       window.dispatchEvent(new PopStateEvent('popstate'))
+                      setSelectedProduct(product)
+                      setSearchOpen(false)
+                      setSearchQuery('')
+                      window.history.pushState(window.history.state || {}, '', '#detail')
+                      window.dispatchEvent(new PopStateEvent('popstate'))
                     }}
                   >
                     <img src={product.image} alt={product.name} className="w-12 h-14 object-cover rounded-sm" />
