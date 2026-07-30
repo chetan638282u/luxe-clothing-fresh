@@ -128,7 +128,7 @@ export default function Navbar() {
                   >
                     <img src={product.image} alt={product.name} className="w-12 h-14 object-cover rounded-sm" />
                     <div>
-                      <p className="text-ivory text-sm truncate">{product.name}</p>
+                      <p className="text-ivory text-sm">{product.name}</p>
                       <p className="text-gold text-xs mt-1">{product.price}</p>
                     </div>
                   </div>
