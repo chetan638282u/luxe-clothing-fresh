@@ -53,14 +53,14 @@ export default function CheckoutPanel({ open, onClose }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="bg-charcoal rounded-xl w-full max-w-lg max-h-[calc(100vw*1.6)] md:max-h-[85vh] border border-white/10 grid grid-rows-[auto_1fr] overflow-hidden"
+            className="bg-charcoal rounded-xl w-full max-w-lg max-h-[calc(100vw*1.6)] md:max-h-[85vh] border border-black/10 grid grid-rows-[auto_1fr] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-5 border-b border-white/10 shrink-0">
+            <div className="flex items-center justify-between p-5 border-b border-black/10 shrink-0">
               <h2 className="font-heading text-lg text-ivory tracking-wide">Checkout</h2>
               <button
                 onClick={onClose}
-                className="w-8 h-8 rounded-full bg-black/40 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors"
+                className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-ivory/60 hover:text-gold hover:bg-black/10 transition-colors"
                 aria-label="Close checkout"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -114,14 +114,14 @@ export default function CheckoutPanel({ open, onClose }) {
                                 <div className="flex items-center gap-2 mt-2">
                                   <button
                                     onClick={() => { if (item.count <= 1) { removeFromCheckoutByName(item.name) } else { decrementFromCheckout(item.name) } }}
-                                    className="w-5 h-5 rounded-full border border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
+                                    className="w-5 h-5 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
                                   >
                                     <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12" /></svg>
                                   </button>
                                   <span className="text-ivory text-xs w-3 text-center">{item.count}</span>
                                   <button
                                     onClick={() => incrementInCheckout(item)}
-                                    className="w-5 h-5 rounded-full border border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
+                                    className="w-5 h-5 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
                                   >
                                     <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                                   </button>
@@ -136,7 +136,7 @@ export default function CheckoutPanel({ open, onClose }) {
                             </div>
                           ))}
                         </div>
-                        <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
+                        <div className="flex justify-between items-center mt-4 pt-4 border-t border-black/10">
                           <span className="text-ivory/60 text-sm">Total</span>
                           <span className="text-gold text-lg font-heading">${total}</span>
                         </div>
@@ -150,21 +150,21 @@ export default function CheckoutPanel({ open, onClose }) {
                             placeholder="Full Name"
                             value={form.name}
                             onChange={handleChange('name')}
-                            className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                            className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                           />
                           <input
                             type="email"
                             placeholder="Email"
                             value={form.email}
                             onChange={handleChange('email')}
-                            className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                            className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                           />
                           <textarea
                             placeholder="Shipping Address"
                             value={form.address}
                             onChange={handleChange('address')}
                             rows={2}
-                            className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors resize-none"
+                            className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors resize-none"
                           />
                         </div>
                       </div>
@@ -178,7 +178,7 @@ export default function CheckoutPanel({ open, onClose }) {
                             value={form.card}
                             onChange={handleChange('card')}
                             maxLength={19}
-                            className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                            className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                           />
                           <div className="flex gap-3">
                             <input
@@ -187,7 +187,7 @@ export default function CheckoutPanel({ open, onClose }) {
                               value={form.expiry}
                               onChange={handleChange('expiry')}
                               maxLength={5}
-                              className="flex-1 bg-deep border border-white/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                              className="flex-1 bg-deep border border-black/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                             />
                             <input
                               type="text"
@@ -195,7 +195,7 @@ export default function CheckoutPanel({ open, onClose }) {
                               value={form.cvc}
                               onChange={handleChange('cvc')}
                               maxLength={4}
-                              className="flex-1 bg-deep border border-white/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                              className="flex-1 bg-deep border border-black/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                             />
                           </div>
                         </div>

@@ -25,16 +25,16 @@ export default function WishlistPanel({ open, onClose }) {
       animate={{ x: 0 }}
       exit={{ x: '100%', pointerEvents: 'none' }}
       transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-      className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-white/10 flex flex-col"
+      className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-black/10 flex flex-col"
       style={{ contain: 'paint layout', willChange: 'transform' }}
     >
-      <div className="flex items-center justify-between p-5 border-b border-white/10">
+      <div className="flex items-center justify-between p-5 border-b border-black/10">
               <h2 className="font-heading text-lg text-ivory tracking-wide">
                 Wishlist {items.length > 0 && <span className="text-gold text-sm ml-1">({items.length})</span>}
               </h2>
               <button
                 onClick={onClose}
-                className="w-8 h-8 rounded-full bg-black/40 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors"
+                className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-ivory/60 hover:text-gold hover:bg-black/10 transition-colors"
                 aria-label="Close wishlist"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

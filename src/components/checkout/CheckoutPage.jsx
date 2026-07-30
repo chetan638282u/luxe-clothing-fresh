@@ -129,8 +129,8 @@ export default function CheckoutPage({ onClose }) {
               <p className="text-ivory/50 text-xs tracking-[0.15em] uppercase mb-5">Order Summary</p>
               <div className="space-y-3">
                 {grouped.map((item) => (
-                  <div key={item.name} className="flex gap-4 bg-white/[0.03] rounded-xl p-4">
-                    <div className="w-16 h-20 shrink-0 bg-charcoal rounded-lg overflow-hidden">
+                  <div key={item.name} className="flex gap-4 bg-charcoal rounded-xl p-4">
+                    <div className="w-16 h-20 shrink-0 bg-white/40 rounded-lg overflow-hidden">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col justify-center">
@@ -139,14 +139,14 @@ export default function CheckoutPage({ onClose }) {
                       <div className="flex items-center gap-3 mt-2">
                         <button
                           onClick={() => { if (item.count <= 1) { removeFromCheckoutByName(item.name) } else { decrementFromCheckout(item.name) } }}
-                          className="w-6 h-6 rounded-full border border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
+                          className="w-6 h-6 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
                         >
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12" /></svg>
                         </button>
                         <span className="text-ivory text-sm w-4 text-center font-mono">{item.count}</span>
                         <button
                           onClick={() => incrementInCheckout(item)}
-                          className="w-6 h-6 rounded-full border border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
+                          className="w-6 h-6 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
                         >
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                         </button>
@@ -161,14 +161,14 @@ export default function CheckoutPage({ onClose }) {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between items-center mt-6 pt-5 border-t border-white/10">
+              <div className="flex justify-between items-center mt-6 pt-5 border-t border-black/10">
                 <span className="text-ivory/60">Total</span>
                 <span className="text-gold text-2xl font-heading">${total}</span>
               </div>
             </div>
 
             <div className="lg:col-span-5">
-              <div className="bg-white/[0.02] rounded-xl p-6 border border-white/5">
+              <div className="bg-charcoal rounded-xl p-6 border border-black/5">
                 <p className="text-ivory/50 text-xs tracking-[0.15em] uppercase mb-5">Shipping Details</p>
                 <div className="space-y-3.5">
                   <input
@@ -176,21 +176,21 @@ export default function CheckoutPage({ onClose }) {
                     placeholder="Full Name"
                     value={form.name}
                     onChange={handleChange('name')}
-                    className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                    className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                   />
                   <input
                     type="email"
                     placeholder="Email"
                     value={form.email}
                     onChange={handleChange('email')}
-                    className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                    className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                   />
                   <textarea
                     placeholder="Shipping Address"
                     value={form.address}
                     onChange={handleChange('address')}
                     rows={3}
-                    className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors resize-none"
+                    className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors resize-none"
                   />
                 </div>
 
@@ -202,7 +202,7 @@ export default function CheckoutPage({ onClose }) {
                     value={form.card}
                     onChange={handleChange('card')}
                     maxLength={19}
-                    className="w-full bg-deep border border-white/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                    className="w-full bg-deep border border-black/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                   />
                   <div className="flex gap-3.5">
                     <input
@@ -211,7 +211,7 @@ export default function CheckoutPage({ onClose }) {
                       value={form.expiry}
                       onChange={handleChange('expiry')}
                       maxLength={5}
-                      className="flex-1 min-w-0 bg-deep border border-white/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                      className="flex-1 min-w-0 bg-deep border border-black/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                     />
                     <input
                       type="text"
@@ -220,7 +220,7 @@ export default function CheckoutPage({ onClose }) {
                       onChange={handleChange('cvc')}
                       maxLength={4}
                       onFocus={(e) => setTimeout(() => e.target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300)}
-                      className="flex-1 min-w-0 bg-deep border border-white/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
+                      className="flex-1 min-w-0 bg-deep border border-black/10 rounded-lg px-4 py-3.5 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                     />
                   </div>
                 </div>
