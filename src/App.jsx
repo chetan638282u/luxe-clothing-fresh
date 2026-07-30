@@ -125,8 +125,20 @@ function App() {
     }
   }, [])
 
-  // Removed overflow hidden to prevent ScrollTrigger refresh layout thrashing on mobile
+  // Lock body scroll when any overlay is active
+  useEffect(() => {
+    if (showWomen || showMen || showAccessories || showNewArrivals || showCheckout || wishlistOpen || cartOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+      // Refresh ScrollTrigger to prevent layout thrashing on mobile after scroll lock is removed
+      ScrollTrigger.refresh()
+    }
 
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen])
   useEffect(() => {
     const syncFromHash = () => {
       const search = new URLSearchParams(window.location.search)
