@@ -7,6 +7,7 @@ import MobileMenu from './MobileMenu'
 import { scrollToAnchor } from '../../utils/scroll'
 import { womenProducts, menProducts, accessoriesProducts, newArrivalsProducts, bestSellersProducts } from '../../data/catalog'
 import useMediaQuery from '../../hooks/useMediaQuery'
+import ProductDetail from '../women/ProductDetail'
 
 export default function Navbar() {
   const isMobile = useMediaQuery('(max-width: 767px)')
@@ -15,8 +16,26 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchFeedback, setSearchFeedback] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const searchInputRef = useRef(null)
   const navRef = useRef(null)
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([])
+      return
+    }
+    const q = searchQuery.toLowerCase().trim()
+    const allProducts = [
+      ...womenProducts, ...menProducts,
+      ...accessoriesProducts, ...newArrivalsProducts,
+      ...bestSellersProducts,
+    ]
+    const matches = allProducts.filter(p => p.name.toLowerCase().includes(q))
+    const uniqueMatches = Array.from(new Map(matches.map(item => [item.id, item])).values())
+    setSearchResults(uniqueMatches.slice(0, 5))
+  }, [searchQuery])
 
   useEffect(() => {
     const handler = () => {
@@ -88,7 +107,36 @@ export default function Navbar() {
           <NavLinks />
         </div>
 
-        <div className="nav-item flex items-center gap-4">
+        <div className="nav-item flex items-center gap-4 relative">
+          <AnimatePresence>
+            {searchOpen && searchResults.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full right-8 mt-6 w-72 bg-[#1A1A1A] border border-white/10 shadow-2xl rounded-lg overflow-hidden z-[100]"
+              >
+                {searchResults.map(product => (
+                  <div 
+                    key={product.id}
+                    className="flex items-center gap-4 p-3 hover:bg-white/5 cursor-pointer transition-colors border-b border-white/5 last:border-0"
+                    onClick={() => {
+                       setSelectedProduct(product)
+                       setSearchOpen(false)
+                       setSearchQuery('')
+                    }}
+                  >
+                    <img src={product.image} alt={product.name} className="w-12 h-14 object-cover rounded-sm" />
+                    <div>
+                      <p className="text-ivory text-sm truncate">{product.name}</p>
+                      <p className="text-gold text-xs mt-1">{product.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <AnimatePresence>
             {searchOpen && (
               <motion.div
@@ -105,20 +153,12 @@ export default function Navbar() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                      const q = searchQuery.toLowerCase().trim()
-                      if (!q) return
-                      const allProducts = [
-                        ...womenProducts, ...menProducts,
-                        ...accessoriesProducts, ...newArrivalsProducts,
-                        ...bestSellersProducts,
-                      ]
-                      const match = allProducts.find(p => p.name.toLowerCase().includes(q))
-                      if (match) {
-                        setSearchFeedback('')
-                        scrollToAnchor('#hero')
+                      if (searchResults.length > 0) {
+                        setSelectedProduct(searchResults[0])
                         setSearchOpen(false)
                         setSearchQuery('')
-                      } else {
+                        setSearchFeedback('')
+                      } else if (searchQuery.trim()) {
                         setSearchFeedback('product not exist')
                         setTimeout(() => setSearchFeedback(''), 2000)
                       }
@@ -127,6 +167,7 @@ export default function Navbar() {
                       setSearchOpen(false)
                       setSearchQuery('')
                       setSearchFeedback('')
+                      setSearchResults([])
                     }
                   }}
                   onBlur={() => setTimeout(() => { setSearchFeedback('') }, 200)}
@@ -156,6 +197,15 @@ export default function Navbar() {
           {mobileMenuOpen && <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />}
         </AnimatePresence>
       )}
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductDetail
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
+      </AnimatePresence>
     </header>
   )
 }
