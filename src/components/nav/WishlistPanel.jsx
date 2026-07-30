@@ -103,10 +103,6 @@ export default function WishlistPanel({ open, onClose }) {
     </motion.div>
   )
 
-  if (isMobile) {
-    return open ? <>{overlay}{drawer}</> : null
-  }
-
   return (
     <>
       <AnimatePresence>{open && overlay}</AnimatePresence>
