@@ -32,7 +32,7 @@ export default function CartPanel({ open, onClose }) {
       animate={{ x: 0 }}
       exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0.05 } } : { x: '100%', pointerEvents: 'none' }}
       transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-      className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-black/10 flex flex-col"
+      className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal opacity-[0.99] border-l border-black/10 flex flex-col"
       style={{ contain: 'paint layout', willChange: 'transform' }}
     >
       <div className="flex items-center justify-between p-5 border-b border-black/10">
