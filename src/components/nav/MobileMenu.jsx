@@ -47,7 +47,7 @@ export default function MobileMenu({ open, onClose }) {
           variants={overlayVariants}
           initial="hidden"
           animate="visible"
-          exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : "exit"}
+          exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0.05 } } : "exit"}
         >
           <button
             className="absolute top-6 right-6 text-ivory/80 hover:text-gold transition-colors z-50"
@@ -64,7 +64,7 @@ export default function MobileMenu({ open, onClose }) {
             variants={listVariants}
             initial="hidden"
             animate="visible"
-            exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : "exit"}
+            exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0.05 } } : "exit"}
           >
             {links.map((link) => (
               <motion.li key={link.label} variants={linkVariants}>
