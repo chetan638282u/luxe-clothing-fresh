@@ -18,7 +18,7 @@ export default function CartPanel({ open, onClose }) {
       key="cart-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, pointerEvents: 'none' }}
+      exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0.05 } } : { opacity: 0, pointerEvents: 'none' }}
       transition={{ duration: 0.2 }}
       className="fixed inset-0 z-[70] bg-black/50"
       onClick={onClose}
@@ -30,7 +30,7 @@ export default function CartPanel({ open, onClose }) {
       key="cart-drawer"
       initial={{ x: '100%' }}
       animate={{ x: 0 }}
-      exit={{ x: '100%', pointerEvents: 'none' }}
+      exit={isMobile ? { opacity: 0, pointerEvents: 'none', transition: { duration: 0.05 } } : { x: '100%', pointerEvents: 'none' }}
       transition={{ type: 'spring', damping: 28, stiffness: 300 }}
       className="fixed top-0 right-0 z-[80] h-full w-full max-w-md bg-charcoal border-l border-black/10 flex flex-col"
       style={{ contain: 'paint layout', willChange: 'transform' }}
@@ -133,6 +133,10 @@ export default function CartPanel({ open, onClose }) {
             )}
     </motion.div>
   )
+
+  if (isMobile) {
+    return open ? <>{overlay}{drawer}</> : null
+  }
 
   return (
     <>
