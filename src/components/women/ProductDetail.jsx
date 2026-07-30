@@ -38,7 +38,7 @@ export default function ProductDetail({ product, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { opacity: 0, scale: 0.92, y: 20 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[calc(100vw*1.6)] md:max-h-[85vh] border border-white/10 flex flex-col md:flex-row"
+        className="bg-charcoal rounded-xl overflow-hidden w-full max-w-5xl max-h-[calc(100vw*1.6)] md:max-h-[85vh] border border-black/10 flex flex-col md:flex-row shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full md:w-[55%] min-h-[300px] md:min-h-[500px] overflow-hidden">
@@ -53,7 +53,7 @@ export default function ProductDetail({ product, onClose }) {
               toggleWishlist(product)
               showToast(isWishlisted(product.name) ? 'Removed from Wishlist' : 'Added to Wishlist')
             }}
-            className="absolute top-3 right-3 z-10 bg-black/40 rounded-full p-1.5 transition-colors"
+            className="absolute top-3 right-3 z-10 bg-white/80 hover:bg-white rounded-full p-1.5 transition-colors shadow-sm"
             aria-label="Add to wishlist"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill={isWishlisted(product.name) ? '#c9a961' : 'none'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className={isWishlisted(product.name) ? 'text-gold' : 'text-ivory/80 hover:text-gold'}>
@@ -70,7 +70,7 @@ export default function ProductDetail({ product, onClose }) {
             </div>
             <button
               onClick={onClose}
-              className="shrink-0 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-ivory/80 hover:text-gold transition-colors"
+              className="shrink-0 w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-ivory/80 hover:text-gold hover:bg-black/10 transition-colors"
               aria-label="Close"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -94,7 +94,7 @@ export default function ProductDetail({ product, onClose }) {
                   className={`w-10 h-10 text-xs font-medium rounded-full border transition-all ${
                     selectedSize === s
                       ? 'border-gold bg-gold/10 text-gold'
-                      : 'border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold'
+                      : 'border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold'
                   }`}
                 >
                   {s}
@@ -108,7 +108,7 @@ export default function ProductDetail({ product, onClose }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setQty(Math.max(1, qty - 1))}
-                className="w-9 h-9 rounded-full border border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
+                className="w-9 h-9 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <line x1="5" y1="12" x2="19" y2="12" />
@@ -117,7 +117,7 @@ export default function ProductDetail({ product, onClose }) {
               <span className="text-ivory text-base w-6 text-center">{qty}</span>
               <button
                 onClick={() => setQty(qty + 1)}
-                className="w-9 h-9 rounded-full border border-white/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
+                className="w-9 h-9 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <line x1="12" y1="5" x2="12" y2="19" />
