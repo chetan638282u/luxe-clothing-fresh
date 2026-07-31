@@ -142,14 +142,14 @@ function App() {
   useEffect(() => {
     const syncFromHash = () => {
       const hash = window.location.hash.slice(1)
-      const view = hash.split('?')[0] // handle query params if any
-      setShowWomen(view === 'women')
-      setShowMen(view === 'men')
-      setShowAccessories(view === 'accessories')
-      setShowNewArrivals(view === 'newarrivals')
-      setShowCheckout(view === 'checkout')
-      setCartOpen(view === 'cart')
-      setWishlistOpen(view === 'wishlist')
+      const views = hash.split('?')[0].split('/') // support stacked views like cart/checkout
+      setShowWomen(views.includes('women'))
+      setShowMen(views.includes('men'))
+      setShowAccessories(views.includes('accessories'))
+      setShowNewArrivals(views.includes('newarrivals'))
+      setShowCheckout(views.includes('checkout'))
+      setCartOpen(views.includes('cart'))
+      setWishlistOpen(views.includes('wishlist'))
     }
     
     // Forensic Logs
@@ -172,7 +172,15 @@ function App() {
 
   useEffect(() => {
     const pushView = (view) => {
-      window.location.hash = view
+      const currentHash = window.location.hash.slice(1)
+      const parts = currentHash ? currentHash.split('/') : []
+      if (parts[parts.length - 1] === view) return // already active
+      
+      if (parts.length > 0 && !parts.includes(view)) {
+        window.location.hash = currentHash + '/' + view
+      } else if (!parts.includes(view)) {
+        window.location.hash = view
+      }
     }
     const openW = () => pushView('women')
     const closeW = () => window.history.back()
