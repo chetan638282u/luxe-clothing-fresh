@@ -1,6 +1,7 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
-export const useStore = create((set) => ({
+export const useStore = create(persist((set) => ({
   bagCount: 0,
   bagItems: [],
   wishlist: [],
@@ -70,6 +71,8 @@ export const useStore = create((set) => ({
   }),
 
   clearBag: () => set({ bagCount: 0, bagItems: [], checkoutItems: [] })
+}), {
+  name: 'luxe-clothing-storage'
 }))
 
 export const addToBag = (product) => useStore.getState().addToBag(product)
