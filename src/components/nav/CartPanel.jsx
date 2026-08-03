@@ -107,14 +107,7 @@ export default function CartPanel({ open, onClose }) {
                           </button>
                         </div>
                       </div>
-                      <div className="flex items-center shrink-0">
-                        <button
-                          onClick={() => { setCheckoutItems(Array.from({ length: item.count }, () => ({ name: item.name, price: item.price, image: item.image }))); window.dispatchEvent(new Event('open-checkout')) }}
-                          className="bg-gold text-deep hover:bg-ivory transition-colors px-3 py-1.5 text-xs tracking-[0.1em] uppercase font-semibold rounded"
-                        >
-                          Purchase
-                        </button>
-                      </div>
+
                     </div>
                   ))}
                 </div>
@@ -127,7 +120,7 @@ export default function CartPanel({ open, onClose }) {
                   onClick={() => { setCheckoutItems([...items]); window.dispatchEvent(new Event('open-checkout')) }}
                   className="w-full bg-gold text-deep hover:bg-ivory transition-all py-3.5 text-xs tracking-[0.2em] uppercase font-semibold"
                 >
-                  Purchase
+                  Proceed to Buy
                 </button>
               </div>
             )}
