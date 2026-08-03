@@ -58,8 +58,21 @@ export default function WishlistPanel({ open, onClose }) {
                   {items.map((item) => (
                     <div
                       key={item.name}
-                      className="flex gap-4 bg-deep rounded-lg p-3"
+                      className="relative flex gap-4 bg-deep rounded-lg p-3"
                     >
+                      <button
+                        onClick={() => {
+                          toggleWishlist(item)
+                          showToast('Removed from Wishlist')
+                        }}
+                        className="absolute top-2 right-2 p-1 text-ivory/40 hover:text-red-400 transition-colors"
+                        aria-label="Remove item"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
                       <div className="w-20 h-24 shrink-0 bg-charcoal rounded overflow-hidden">
                         <img
                           src={item.image}
@@ -70,7 +83,7 @@ export default function WishlistPanel({ open, onClose }) {
                       </div>
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <div>
-                          <h3 className="text-sm text-ivory truncate">{item.name}</h3>
+                          <h3 className="text-sm text-ivory truncate pr-6">{item.name}</h3>
                           <p className="text-gold text-xs mt-0.5">{item.price}</p>
                         </div>
                         <div className="flex items-center gap-3">
@@ -83,15 +96,6 @@ export default function WishlistPanel({ open, onClose }) {
                             className="text-gold hover:text-ivory transition-colors text-xs tracking-[0.1em] uppercase"
                           >
                             Add to Bag
-                          </button>
-                          <button
-                            onClick={() => {
-                              toggleWishlist(item)
-                              showToast('Removed from Wishlist')
-                            }}
-                            className="text-ivory/40 hover:text-red-400 transition-colors text-xs tracking-[0.1em] uppercase"
-                          >
-                            Remove
                           </button>
                         </div>
                       </div>
