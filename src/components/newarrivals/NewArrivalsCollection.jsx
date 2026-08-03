@@ -94,13 +94,15 @@ export default function NewArrivalsCollection({ onClose, hash }) {
 
   const handleSelect = (product) => {
     setSelectedProduct(product)
-    window.history.pushState(window.history.state || {}, '', '#detail')
-    window.dispatchEvent(new PopStateEvent('popstate'))
+    const currentHash = window.location.hash
+    window.history.pushState(window.history.state || {}, '', currentHash + '/detail')
   }
 
   useEffect(() => {
     const onHashChange = () => {
-      if (!window.location.hash) setSelectedProduct(null)
+      if (!window.location.hash.endsWith('/detail')) {
+        setSelectedProduct(null)
+      }
     }
     window.addEventListener('popstate', onHashChange)
     return () => window.removeEventListener('popstate', onHashChange)
