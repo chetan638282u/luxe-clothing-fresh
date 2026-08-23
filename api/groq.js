@@ -60,10 +60,10 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       errText = await response.text();
-      const isModelError = errText.includes('model_not_found') || errText.includes('model_decommissioned') || errText.includes('does not exist') || errText.includes('decommissioned');
+      const isModelError = errText.includes('model_not_found') || errText.includes('model_decommissioned') || errText.includes('does not exist') || errText.includes('decommissioned') || errText.includes('rate_limit_exceeded') || response.status === 429;
       
       if (isModelError) {
-        console.log(`Model ${targetModel} not found. Fetching available models for fallback...`);
+        console.log(`Model ${targetModel} failed. Fetching available models for fallback loop...`);
         const modelsRes = await fetch('https://api.groq.com/openai/v1/models', {
           headers: { Authorization: `Bearer ${key}` }
         });
@@ -72,15 +72,27 @@ export default async function handler(req, res) {
           const modelsData = await modelsRes.json();
           const availableModels = modelsData.data?.map(m => m.id) || [];
           
-          // In August 2026, many models were decommissioned. Dynamically pick the first valid text model.
-          // Exclude audio (whisper), text-to-speech (orpheus), vision, and safety (guard) models.
-          const fallbackModel = availableModels.find(m => m !== targetModel && !m.includes('whisper') && !m.includes('vision') && !m.includes('guard') && !m.includes('orpheus')) || availableModels[0];
+          let validModels = availableModels.filter(m => m !== targetModel && !m.includes('whisper') && !m.includes('vision') && !m.includes('guard') && !m.includes('orpheus') && !m.includes('embed') && !m.includes('deepseek') && !m.includes('qwq'));
           
-          if (fallbackModel && fallbackModel !== targetModel) {
+          // Sort to prioritize 8b, 3b, 1b, instant models first
+          validModels.sort((a, b) => {
+            const aSmall = a.includes('8b') || a.includes('3b') || a.includes('1b') || a.includes('instant');
+            const bSmall = b.includes('8b') || b.includes('3b') || b.includes('1b') || b.includes('instant');
+            if (aSmall && !bSmall) return -1;
+            if (!aSmall && bSmall) return 1;
+            return 0;
+          });
+          
+          // Try up to 4 models sequentially
+          for (const fallbackModel of validModels.slice(0, 4)) {
             console.log(`Retrying with fallback model: ${fallbackModel}`);
             response = await makeRequest(fallbackModel);
-            if (!response.ok) {
+            if (response.ok) {
+              break; // Success!
+            } else {
               errText = await response.text();
+              const isRetryable = errText.includes('rate_limit_exceeded') || response.status === 429 || errText.includes('decommissioned') || errText.includes('model_not_found') || errText.includes('does not exist');
+              if (!isRetryable) break; // Break on hard errors (like bad prompt)
             }
           }
         }
@@ -92,7 +104,12 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    res.json({ reply: data.choices?.[0]?.message?.content || '' });
+    let replyText = data.choices?.[0]?.message?.content || '';
+    
+    // Strip out <think>...</think> blocks from deep reasoning models
+    replyText = replyText.replace(/<think>[\s\S]*?<\/think>\n*/g, '').trim();
+    
+    res.json({ reply: replyText });
   } catch (err) {
     console.error('/api/groq error:', err);
     res.status(500).json({ error: err.message });
