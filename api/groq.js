@@ -106,8 +106,12 @@ export default async function handler(req, res) {
     const data = await response.json();
     let replyText = data.choices?.[0]?.message?.content || '';
     
-    // Strip out <think>...</think> blocks from deep reasoning models
-    replyText = replyText.replace(/<think>[\s\S]*?<\/think>\n*/g, '').trim();
+    // Strip out <think>...</think> blocks from deep reasoning models, even if they are unclosed or interrupted
+    replyText = replyText.replace(/<think>[\s\S]*?(?:<\/think>|$)\n*/gi, '').trim();
+    
+    if (!replyText) {
+      return res.status(500).json({ error: "Debug Error: The AI generated an empty response. This usually means a deep reasoning model consumed all max_tokens inside a hidden <think> block without actually answering." });
+    }
     
     res.json({ reply: replyText });
   } catch (err) {
