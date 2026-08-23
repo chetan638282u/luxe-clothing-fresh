@@ -54,13 +54,13 @@ export default async function handler(req, res) {
       }),
     });
 
-    let targetModel = 'llama-3.1-70b-versatile';
+    let targetModel = 'llama3-8b-8192';
     let response = await makeRequest(targetModel);
     let errText = '';
 
     if (!response.ok) {
       errText = await response.text();
-      const isModelError = errText.includes('model_not_found') || errText.includes('does not exist');
+      const isModelError = errText.includes('model_not_found') || errText.includes('model_decommissioned') || errText.includes('does not exist') || errText.includes('decommissioned');
       
       if (isModelError) {
         console.log(`Model ${targetModel} not found. Fetching available models for fallback...`);
