@@ -72,8 +72,9 @@ export default async function handler(req, res) {
           const modelsData = await modelsRes.json();
           const availableModels = modelsData.data?.map(m => m.id) || [];
           
-          // Prefer any chat model by strictly filtering out audio (whisper), vision, and guard models
-          const fallbackModel = availableModels.find(m => !m.includes('whisper') && !m.includes('vision') && !m.includes('guard')) || availableModels[0];
+          // Strictly fallback to a known-good foundational model that doesn't require extra terms acceptance
+          const safeModels = ['llama3-8b-8192', 'llama3-70b-8192', 'mixtral-8x7b-32768', 'gemma2-9b-it', 'llama-3.1-8b-instant'];
+          const fallbackModel = safeModels.find(m => availableModels.includes(m)) || availableModels.find(m => m.includes('llama') && !m.includes('vision') && !m.includes('guard'));
           
           if (fallbackModel && fallbackModel !== targetModel) {
             console.log(`Retrying with fallback model: ${fallbackModel}`);
