@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       }),
     });
 
-    let targetModel = 'gemma2-9b-it';
+    let targetModel = 'llama-3.3-70b-versatile';
     let response = await makeRequest(targetModel);
     let errText = '';
 
@@ -72,9 +72,9 @@ export default async function handler(req, res) {
           const modelsData = await modelsRes.json();
           const availableModels = modelsData.data?.map(m => m.id) || [];
           
-          // Strictly fallback to a known-good foundational model, ensuring we never pick the same failing model
-          const safeModels = ['mixtral-8x7b-32768', 'llama-3.2-3b-preview', 'llama-3.1-8b-instant', 'llama3-8b-8192'];
-          const fallbackModel = safeModels.find(m => m !== targetModel && availableModels.includes(m)) || availableModels.find(m => m !== targetModel && m.includes('llama') && !m.includes('vision') && !m.includes('guard'));
+          // In August 2026, many models were decommissioned. Dynamically pick the first valid text model.
+          // Exclude audio (whisper), text-to-speech (orpheus), vision, and safety (guard) models.
+          const fallbackModel = availableModels.find(m => m !== targetModel && !m.includes('whisper') && !m.includes('vision') && !m.includes('guard') && !m.includes('orpheus')) || availableModels[0];
           
           if (fallbackModel && fallbackModel !== targetModel) {
             console.log(`Retrying with fallback model: ${fallbackModel}`);
