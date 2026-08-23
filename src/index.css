@@ -71,12 +71,12 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-deep, #0a0a0a);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #bcaf9f;
+  background: rgba(140, 109, 70, 0.3);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8c6d46;
+  background: rgba(140, 109, 70, 0.6);
 }
