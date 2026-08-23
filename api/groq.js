@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       }),
     });
 
-    let targetModel = 'llama-3.1-8b-instant';
+    let targetModel = 'llama3-8b-8192';
     let response = await makeRequest(targetModel);
     let errText = '';
 
@@ -72,8 +72,8 @@ export default async function handler(req, res) {
           const modelsData = await modelsRes.json();
           const availableModels = modelsData.data?.map(m => m.id) || [];
           
-          // Prefer any non-vision and non-guard llama model, otherwise fallback to the first safe model
-          const fallbackModel = availableModels.find(m => m.includes('llama') && !m.includes('vision') && !m.includes('guard')) || availableModels.find(m => !m.includes('guard'));
+          // Prefer any chat model by strictly filtering out audio (whisper), vision, and guard models
+          const fallbackModel = availableModels.find(m => !m.includes('whisper') && !m.includes('vision') && !m.includes('guard')) || availableModels[0];
           
           if (fallbackModel && fallbackModel !== targetModel) {
             console.log(`Retrying with fallback model: ${fallbackModel}`);
