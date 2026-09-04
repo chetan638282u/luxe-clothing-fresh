@@ -102,7 +102,7 @@ export default function Chatbot() {
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { role: 'bot', text: `Error: ${err.message}`, time: Date.now() },
+        { role: 'bot', text: 'Something went wrong, please try again later.', time: Date.now() },
       ])
     }
     setLoading(false)
@@ -125,7 +125,7 @@ export default function Chatbot() {
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { role: 'bot', text: `Error: ${err.message}`, time: Date.now() },
+        { role: 'bot', text: 'Something went wrong, please try again later.', time: Date.now() },
       ])
     }
     setLoading(false)
