@@ -78,7 +78,7 @@ export default function WishlistPanel({ open, onClose }) {
                           src={item.image}
                           alt={item.name}
                           className="w-full h-full object-cover"
-                          loading="lazy"
+                          
                         />
                       </div>
                       <div className="flex-1 min-w-0 flex flex-col justify-between">

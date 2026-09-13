@@ -92,6 +92,15 @@ export default function ProductPage({ productSlug }) {
   return (
     <>
       <div className="min-h-screen pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto text-ivory">
+        <div className="mb-6 md:mb-10">
+          <button 
+            onClick={() => window.history.back()} 
+            className="flex items-center gap-2 text-ivory/60 hover:text-gold transition-colors text-sm tracking-[0.15em] uppercase w-max"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="m15 18-6-6 6-6"/></svg>
+            Back
+          </button>
+        </div>
       
       {/* Product Details Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
@@ -108,13 +117,6 @@ export default function ProductPage({ productSlug }) {
 
         {/* Right Column: Info */}
         <div className="flex flex-col">
-          {product.season && (
-            <div className="mb-4">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-rose-50 text-rose-900 text-xs font-medium tracking-wide">
-                ✨ {product.season.charAt(0).toUpperCase() + product.season.slice(1)} Collection
-              </span>
-            </div>
-          )}
 
           <h1 className="text-3xl md:text-4xl font-heading mb-2">{product.name}</h1>
           <p className="text-ivory/70 text-sm mb-6 leading-relaxed">

@@ -102,7 +102,7 @@ function ImageSide({ story }) {
         src={story.image}
         alt={story.alt}
         className="parallax-img w-full aspect-[4/5] object-cover"
-        loading="lazy"
+        
       />
     </div>
   )

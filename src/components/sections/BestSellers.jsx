@@ -46,7 +46,7 @@ export function ProductCard({ product, onSelect }) {
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
+          
         />
 
         <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 max-lg:opacity-100 max-lg:translate-y-0">

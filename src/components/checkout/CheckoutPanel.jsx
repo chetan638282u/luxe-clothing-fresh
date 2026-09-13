@@ -106,7 +106,7 @@ export default function CheckoutPanel({ open, onClose }) {
                           {grouped.map((item) => (
                             <div key={item.name} className="flex gap-3 bg-deep rounded-lg p-3">
                               <div className="w-14 h-16 shrink-0 bg-charcoal rounded overflow-hidden">
-                                <img src={item.image} alt={item.name} className="w-full h-full object-cover" loading="lazy" />
+                                <img src={item.image} alt={item.name} className="w-full h-full object-cover"  />
                               </div>
                               <div className="flex-1 min-w-0 flex flex-col justify-center">
                                 <h3 className="text-sm text-ivory truncate">{item.name}</h3>

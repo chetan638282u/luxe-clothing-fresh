@@ -247,7 +247,7 @@ export default function CheckoutPage({ onClose }) {
                     <div key={`${item.name}-${item.size}-${idx}`} className="bg-charcoal border border-ivory/5 rounded-xl p-4 md:p-5 flex flex-row gap-6 md:gap-8 relative">
                       {/* Image */}
                       <div className="w-36 md:w-44 shrink-0 bg-white/40 rounded-lg overflow-hidden self-stretch">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" loading="lazy" />
+                        <img src={item.image} alt={item.name} className="w-full h-full object-cover"  />
                       </div>
                       
                       {/* Details */}
