@@ -42,7 +42,7 @@ export default function FeaturedCollections() {
   }, [])
 
   return (
-    <section id="collections" ref={containerRef} className="py-24 px-6">
+    <section id="collections" ref={containerRef} className="pt-12 pb-24 px-6">
       <h2 className="font-heading text-3xl md:text-4xl text-center text-ivory mb-16">
         Curated Collections
       </h2>
