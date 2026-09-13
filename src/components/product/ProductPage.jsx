@@ -34,20 +34,24 @@ export default function ProductPage({ productSlug }) {
       
       // Get 4 random related products (excluding current one)
       const others = uniqueProducts.filter(p => p.name !== foundProduct.name)
-      const shuffled = [...others].sort(() => 0.5 - Math.random())
-      setRelatedProducts(shuffled.slice(0, 4))
+      setRelatedProducts(others.slice(0, 4))
     }
   }, [productSlug])
 
   // Scroll to top when product changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    })
-    const timer = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    }, 100)
+    const scrollToTop = () => {
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      }
+    }
+
+    scrollToTop()
+    requestAnimationFrame(scrollToTop)
+    const timer = setTimeout(scrollToTop, 100)
+    
     return () => clearTimeout(timer)
   }, [productSlug])
 
@@ -186,7 +190,7 @@ export default function ProductPage({ productSlug }) {
           </div>
 
           {/* Shop With Confidence */}
-          <div className="border border-ivory/10 rounded-sm p-5 bg-black/20">
+          <div className="mt-6">
             <h3 className="text-sm font-medium mb-4 flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
               Shop with confidence

@@ -5,12 +5,11 @@ const links = [
   { label: 'Collections', href: '#collections' },
   { label: 'Lookbook', href: '#bestsellers' },
   { label: 'About', href: '#craftsmanship' },
-  { label: 'Contact', href: '#newsletter' },
 ]
 
 export default function NavLinks() {
   return (
-    <div className="hidden lg:flex items-center gap-10">
+    <div className="hidden lg:flex items-center gap-12">
       {links.map((link) => (
         <span
           key={link.label}

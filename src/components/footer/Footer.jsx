@@ -88,7 +88,7 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer ref={containerRef} className="bg-charcoal pt-20 pb-6 px-6">
+    <footer ref={containerRef} className="bg-charcoal pt-16 pb-6 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           <div className="footer-col lg:col-span-2">

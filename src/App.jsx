@@ -112,6 +112,7 @@ function App() {
       infinite: false,
     })
 
+    window.lenis = lenis
     lenis.on('scroll', ScrollTrigger.update)
 
     const scrollFn = (time) => {
@@ -123,6 +124,7 @@ function App() {
 
     return () => {
       lenis.destroy()
+      delete window.lenis
       gsap.ticker.remove(scrollFn)
     }
   }, [])

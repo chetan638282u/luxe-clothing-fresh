@@ -71,7 +71,7 @@ export default function CartPanel({ open, onClose }) {
                     >
                       <button
                         onClick={() => {
-                          removeFromBagByName(item.name)
+                          removeFromBagByNameAndSize(item.name, item.size)
                           showToast('Removed from Cart')
                         }}
                         className="absolute top-2 right-2 p-1 text-ivory/40 hover:text-red-400 transition-colors"
@@ -94,7 +94,7 @@ export default function CartPanel({ open, onClose }) {
                         <div>
                           <h3 className="text-sm text-ivory truncate pr-6">{item.name}</h3>
                           {item.size && <p className="text-xs text-ivory/60 mt-0.5">Size: {item.size}</p>}
-                          <p className="text-black font-semibold text-xs mt-0.5">{item.price}</p>
+                          <p className="text-ivory/80 text-xs mt-0.5">{item.price}</p>
                         </div>
                         <div className="flex items-center gap-2">
                           <button

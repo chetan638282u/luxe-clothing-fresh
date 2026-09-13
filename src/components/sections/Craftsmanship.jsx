@@ -70,7 +70,7 @@ export default function Craftsmanship() {
   }, [])
 
   return (
-    <section id="craftsmanship" ref={sectionRef} className="py-24 px-6 space-y-32">
+    <section id="craftsmanship" ref={sectionRef} className="pt-24 pb-16 px-6 space-y-32">
       <div className="max-w-7xl mx-auto space-y-32">
         {stories.map((story, i) => (
           <div

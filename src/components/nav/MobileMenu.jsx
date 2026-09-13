@@ -7,7 +7,6 @@ const links = [
   { label: 'Collections', href: '#collections' },
   { label: 'Lookbook', href: '#bestsellers' },
   { label: 'About', href: '#craftsmanship' },
-  { label: 'Contact', href: '#newsletter' },
 ]
 
 const overlayVariants = {
