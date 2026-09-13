@@ -8,7 +8,7 @@ export const useStore = create(persist((set) => ({
   checkoutItems: [],
 
   addToBag: (product) => set((state) => {
-    const newItems = [...state.bagItems, { name: product.name, price: product.price, image: product.image }]
+    const newItems = [...state.bagItems, { name: product.name, price: product.price, image: product.image, size: product.size }]
     return { bagItems: newItems, bagCount: state.bagCount + 1 }
   }),
   
@@ -23,8 +23,23 @@ export const useStore = create(persist((set) => ({
     return { bagItems: newItems, bagCount: newItems.length }
   }),
 
+  removeFromBagByNameAndSize: (name, size) => set((state) => {
+    const newItems = state.bagItems.filter(i => !(i.name === name && i.size === size))
+    return { bagItems: newItems, bagCount: newItems.length }
+  }),
+
   removeOneFromBag: (name) => set((state) => {
     const idx = state.bagItems.findIndex(i => i.name === name)
+    if (idx >= 0) {
+      const newItems = [...state.bagItems]
+      newItems.splice(idx, 1)
+      return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - 1) }
+    }
+    return state
+  }),
+
+  removeOneFromBagByKey: (name, size) => set((state) => {
+    const idx = state.bagItems.findIndex(i => i.name === name && i.size === size)
     if (idx >= 0) {
       const newItems = [...state.bagItems]
       newItems.splice(idx, 1)
@@ -43,12 +58,26 @@ export const useStore = create(persist((set) => ({
     return { checkoutItems: state.checkoutItems.filter(i => i.name !== name) }
   }),
 
+  removeFromCheckoutByNameAndSize: (name, size) => set((state) => {
+    return { checkoutItems: state.checkoutItems.filter(i => !(i.name === name && i.size === size)) }
+  }),
+
   incrementInCheckout: (item) => set((state) => {
-    return { checkoutItems: [...state.checkoutItems, { name: item.name, price: item.price, image: item.image }] }
+    return { checkoutItems: [...state.checkoutItems, { name: item.name, price: item.price, image: item.image, size: item.size }] }
   }),
 
   decrementFromCheckout: (name) => set((state) => {
     const idx = state.checkoutItems.findIndex(i => i.name === name)
+    if (idx >= 0) {
+      const newItems = [...state.checkoutItems]
+      newItems.splice(idx, 1)
+      return { checkoutItems: newItems }
+    }
+    return state
+  }),
+
+  decrementFromCheckoutByKey: (name, size) => set((state) => {
+    const idx = state.checkoutItems.findIndex(i => i.name === name && i.size === size)
     if (idx >= 0) {
       const newItems = [...state.checkoutItems]
       newItems.splice(idx, 1)
@@ -78,11 +107,15 @@ export const useStore = create(persist((set) => ({
 export const addToBag = (product) => useStore.getState().addToBag(product)
 export const removeFromBag = (idx) => useStore.getState().removeFromBag(idx)
 export const removeFromBagByName = (name) => useStore.getState().removeFromBagByName(name)
+export const removeFromBagByNameAndSize = (name, size) => useStore.getState().removeFromBagByNameAndSize(name, size)
 export const removeOneFromBag = (name) => useStore.getState().removeOneFromBag(name)
+export const removeOneFromBagByKey = (name, size) => useStore.getState().removeOneFromBagByKey(name, size)
 export const removeFromCheckout = (idx) => useStore.getState().removeFromCheckout(idx)
 export const removeFromCheckoutByName = (name) => useStore.getState().removeFromCheckoutByName(name)
+export const removeFromCheckoutByNameAndSize = (name, size) => useStore.getState().removeFromCheckoutByNameAndSize(name, size)
 export const incrementInCheckout = (item) => useStore.getState().incrementInCheckout(item)
 export const decrementFromCheckout = (name) => useStore.getState().decrementFromCheckout(name)
+export const decrementFromCheckoutByKey = (name, size) => useStore.getState().decrementFromCheckoutByKey(name, size)
 export const setCheckoutItems = (items) => useStore.getState().setCheckoutItems(items)
 export const toggleWishlist = (product) => useStore.getState().toggleWishlist(product)
 export const clearBag = () => useStore.getState().clearBag()

@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { addToBag, toggleWishlist, isWishlisted, showToast } from '../../hooks/store'
-import ProductDetail from '../women/ProductDetail'
 import { bestSellersProducts as products } from '../../data/catalog'
 import { ScrollTiltedGrid } from '../ui/ScrollTiltedGrid'
 
 export default function BestSellers() {
   const sectionRef = useRef(null)
-  const [selectedProduct, setSelectedProduct] = useState(null)
 
   // Removed overflow hidden to prevent layout thrashing
 
@@ -24,19 +22,13 @@ export default function BestSellers() {
           <ScrollTiltedGrid 
             products={products} 
             loop={false}
-            onSelect={setSelectedProduct} 
+            onSelect={(product) => {
+              const slug = product.name.replace(/\s+/g, '-').toLowerCase()
+              window.location.hash = '#product/' + slug
+            }} 
           />
         </div>
       </section>
-
-      <AnimatePresence>
-        {selectedProduct && (
-          <ProductDetail
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-          />
-        )}
-      </AnimatePresence>
     </>
   )
 }

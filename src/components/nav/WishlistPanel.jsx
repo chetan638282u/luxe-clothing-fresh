@@ -84,7 +84,7 @@ export default function WishlistPanel({ open, onClose }) {
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <div>
                           <h3 className="text-sm text-ivory truncate pr-6">{item.name}</h3>
-                          <p className="text-gold text-xs mt-0.5">{item.price}</p>
+                          <p className="text-black font-semibold text-xs mt-0.5">{item.price}</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <button

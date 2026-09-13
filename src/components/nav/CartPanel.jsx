@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useStore, setCheckoutItems, removeOneFromBag, removeFromBagByName, addToBag, showToast } from '../../hooks/store'
+import { useStore, setCheckoutItems, removeOneFromBagByKey, removeFromBagByNameAndSize, addToBag, showToast } from '../../hooks/store'
 import useMediaQuery from '../../hooks/useMediaQuery'
 
 export default function CartPanel({ open, onClose }) {
@@ -7,7 +7,7 @@ export default function CartPanel({ open, onClose }) {
   const items = useStore(state => state.bagItems)
 
   const grouped = items.reduce((acc, item) => {
-    const existing = acc.find(i => i.name === item.name)
+    const existing = acc.find(i => i.name === item.name && i.size === item.size)
     if (existing) existing.count++
     else acc.push({ ...item, count: 1 })
     return acc
@@ -93,11 +93,12 @@ export default function CartPanel({ open, onClose }) {
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <div>
                           <h3 className="text-sm text-ivory truncate pr-6">{item.name}</h3>
-                          <p className="text-gold text-xs mt-0.5">{item.price}</p>
+                          {item.size && <p className="text-xs text-ivory/60 mt-0.5">Size: {item.size}</p>}
+                          <p className="text-black font-semibold text-xs mt-0.5">{item.price}</p>
                         </div>
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => { if (item.count <= 1) { removeFromBagByName(item.name); showToast('Removed from Cart') } else { removeOneFromBag(item.name) } }}
+                            onClick={() => { if (item.count <= 1) { removeFromBagByNameAndSize(item.name, item.size); showToast('Removed from Cart') } else { removeOneFromBagByKey(item.name, item.size) } }}
                             className="w-6 h-6 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center text-xs"
                           >
                             {item.count <= 1 ? (

@@ -13,6 +13,7 @@ import NewArrivalsCollection from './components/newarrivals'
 import WishlistPanel from './components/nav/WishlistPanel'
 import CartPanel from './components/nav/CartPanel'
 import CheckoutPage from './components/checkout'
+import ProductPage from './components/product/ProductPage'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
@@ -30,6 +31,7 @@ function App() {
   const [wishlistOpen, setWishlistOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [showCheckout, setShowCheckout] = useState(false)
+  const [currentProductSlug, setCurrentProductSlug] = useState(null)
 
   // Custom Scroll Restoration (Mobile-safe version)
   useEffect(() => {
@@ -150,6 +152,13 @@ function App() {
       setShowCheckout(views.includes('checkout'))
       setCartOpen(views.includes('cart'))
       setWishlistOpen(views.includes('wishlist'))
+      
+      const productIndex = views.indexOf('product')
+      if (productIndex !== -1 && views.length > productIndex + 1) {
+        setCurrentProductSlug(views[productIndex + 1])
+      } else {
+        setCurrentProductSlug(null)
+      }
     }
     
     // Forensic Logs
@@ -234,8 +243,14 @@ function App() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         <Navbar />
-        <Hero />
-        <Sections />
+        {currentProductSlug ? (
+          <ProductPage productSlug={currentProductSlug} />
+        ) : (
+          <>
+            <Hero />
+            <Sections />
+          </>
+        )}
         <Footer />
       </motion.div>
 

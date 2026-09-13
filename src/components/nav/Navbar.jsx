@@ -7,7 +7,6 @@ import MobileMenu from './MobileMenu'
 import { scrollToAnchor } from '../../utils/scroll'
 import { womenProducts, menProducts, accessoriesProducts, newArrivalsProducts, bestSellersProducts } from '../../data/catalog'
 import useMediaQuery from '../../hooks/useMediaQuery'
-import ProductDetail from '../women/ProductDetail'
 
 export default function Navbar() {
   const isMobile = useMediaQuery('(max-width: 767px)')
@@ -17,7 +16,6 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchFeedback, setSearchFeedback] = useState('')
   const [searchResults, setSearchResults] = useState([])
-  const [selectedProduct, setSelectedProduct] = useState(null)
   const searchInputRef = useRef(null)
   const navRef = useRef(null)
 
@@ -47,13 +45,7 @@ export default function Navbar() {
     }
   }, [])
 
-  useEffect(() => {
-    const onHashChange = () => {
-      if (!window.location.hash) setSelectedProduct(null)
-    }
-    window.addEventListener('popstate', onHashChange)
-    return () => window.removeEventListener('popstate', onHashChange)
-  }, [])
+  // Hash change logic removed since it was used for ProductDetail modal
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -129,17 +121,16 @@ export default function Navbar() {
                     key={product.id}
                     className="flex items-center gap-4 p-3 hover:bg-black/5 cursor-pointer transition-colors border-b border-black/5 last:border-0"
                     onClick={() => {
-                      setSelectedProduct(product)
+                      const slug = product.name.replace(/\s+/g, '-').toLowerCase()
                       setSearchOpen(false)
                       setSearchQuery('')
-                      window.history.pushState(window.history.state || {}, '', '#detail')
-                      window.dispatchEvent(new PopStateEvent('popstate'))
+                      window.location.hash = '#product/' + slug
                     }}
                   >
                     <img src={product.image} alt={product.name} className="w-12 h-14 object-cover rounded-sm" />
                     <div>
                       <p className="text-ivory text-sm">{product.name}</p>
-                      <p className="text-gold text-xs mt-1">{product.price}</p>
+                      <p className="text-black font-semibold text-xs mt-1">{product.price}</p>
                     </div>
                   </div>
                 ))}
@@ -164,12 +155,11 @@ export default function Navbar() {
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       if (searchResults.length > 0) {
-                        setSelectedProduct(searchResults[0])
+                        const slug = searchResults[0].name.replace(/\s+/g, '-').toLowerCase()
                         setSearchOpen(false)
                         setSearchQuery('')
                         setSearchFeedback('')
-                        window.history.pushState(window.history.state || {}, '', '#detail')
-                        window.dispatchEvent(new PopStateEvent('popstate'))
+                        window.location.hash = '#product/' + slug
                       } else if (searchQuery.trim()) {
                         setSearchFeedback('product not exist')
                         setTimeout(() => setSearchFeedback(''), 2000)
@@ -210,14 +200,7 @@ export default function Navbar() {
         </AnimatePresence>
       )}
 
-      <AnimatePresence>
-        {selectedProduct && (
-          <ProductDetail
-            product={selectedProduct}
-            onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState(window.history.state || {}, '', window.location.pathname + window.location.search), window.dispatchEvent(new PopStateEvent('popstate'))) }}
-          />
-        )}
-      </AnimatePresence>
+      {/* Product modal removed in favor of ProductPage */}
     </header>
   )
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useStore, removeFromCheckoutByName, incrementInCheckout, decrementFromCheckout, clearBag, showToast } from '../../hooks/store'
+import { useStore, removeFromCheckoutByNameAndSize, incrementInCheckout, decrementFromCheckoutByKey, clearBag, showToast } from '../../hooks/store'
 
 export default function CheckoutPanel({ open, onClose }) {
   const items = useStore(state => state.checkoutItems)
@@ -15,7 +15,7 @@ export default function CheckoutPanel({ open, onClose }) {
   }, [open])
 
   const grouped = items.reduce((acc, item) => {
-    const existing = acc.find(i => i.name === item.name)
+    const existing = acc.find(i => i.name === item.name && i.size === item.size)
     if (existing) existing.count++
     else acc.push({ ...item, count: 1 })
     return acc
@@ -110,10 +110,11 @@ export default function CheckoutPanel({ open, onClose }) {
                               </div>
                               <div className="flex-1 min-w-0 flex flex-col justify-center">
                                 <h3 className="text-sm text-ivory truncate">{item.name}</h3>
-                                <p className="text-gold text-xs mt-0.5">{item.price}</p>
+                                {item.size && <p className="text-xs text-ivory/60 mt-0.5">Size: {item.size}</p>}
+                                <p className="text-black font-semibold text-xs mt-0.5">{item.price}</p>
                                 <div className="flex items-center gap-2 mt-2">
                                   <button
-                                    onClick={() => { if (item.count <= 1) { removeFromCheckoutByName(item.name) } else { decrementFromCheckout(item.name) } }}
+                                    onClick={() => { if (item.count <= 1) { removeFromCheckoutByNameAndSize(item.name, item.size) } else { decrementFromCheckoutByKey(item.name, item.size) } }}
                                     className="w-5 h-5 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
                                   >
                                     <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12" /></svg>
@@ -128,7 +129,7 @@ export default function CheckoutPanel({ open, onClose }) {
                                 </div>
                               </div>
                               <button
-                                onClick={() => removeFromCheckoutByName(item.name)}
+                                onClick={() => removeFromCheckoutByNameAndSize(item.name, item.size)}
                                 className="flex items-center text-ivory/40 hover:text-red-400 transition-colors text-xs tracking-[0.1em] uppercase"
                               >
                                 Remove
@@ -138,7 +139,7 @@ export default function CheckoutPanel({ open, onClose }) {
                         </div>
                         <div className="flex justify-between items-center mt-4 pt-4 border-t border-black/10">
                           <span className="text-ivory/60 text-sm">Total</span>
-                          <span className="text-gold text-lg font-heading">${total}</span>
+                          <span className="text-black font-semibold text-lg font-heading">${total}</span>
                         </div>
                       </div>
 

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { addToBag, toggleWishlist, isWishlisted, showToast } from '../../hooks/store'
-import ProductDetail from './ProductDetail'
 import { womenProducts as products } from '../../data/catalog'
 import useMediaQuery from '../../hooks/useMediaQuery'
 
@@ -96,25 +95,11 @@ function ProductCardWrapper({ product, onSelect }) {
 
 export default function WomenCollection({ onClose, hash }) {
   const isMobile = useMediaQuery('(max-width: 767px)')
-  const [selectedProduct, setSelectedProduct] = useState(null)
-
-
 
   const handleSelect = (product) => {
-    setSelectedProduct(product)
-    const currentHash = window.location.hash
-    window.history.pushState(window.history.state || {}, '', currentHash + '/detail')
+    const slug = product.name.replace(/\s+/g, '-').toLowerCase()
+    window.location.hash = '#product/' + slug
   }
-
-  useEffect(() => {
-    const onHashChange = () => {
-      if (!window.location.hash.endsWith('/detail')) {
-        setSelectedProduct(null)
-      }
-    }
-    window.addEventListener('popstate', onHashChange)
-    return () => window.removeEventListener('popstate', onHashChange)
-  }, [])
 
   return (
     <motion.div
@@ -148,24 +133,6 @@ export default function WomenCollection({ onClose, hash }) {
           </div>
         </div>
       </div>
-
-      {isMobile ? (
-        selectedProduct && (
-          <ProductDetail
-            product={selectedProduct}
-            onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState(window.history.state || {}, '', window.location.pathname + window.location.search), window.dispatchEvent(new PopStateEvent('popstate'))) }}
-          />
-        )
-      ) : (
-        <AnimatePresence>
-          {selectedProduct && (
-            <ProductDetail
-              product={selectedProduct}
-              onClose={() => { window.history.length > 1 ? window.history.back() : (window.history.replaceState(window.history.state || {}, '', window.location.pathname + window.location.search), window.dispatchEvent(new PopStateEvent('popstate'))) }}
-            />
-          )}
-        </AnimatePresence>
-      )}
     </motion.div>
   )
 }
