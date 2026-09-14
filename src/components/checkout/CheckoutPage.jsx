@@ -192,7 +192,7 @@ export default function CheckoutPage({ onClose }) {
       className="fixed inset-0 z-[110] bg-deep flex flex-col"
       style={{ contain: 'paint layout', willChange: 'transform' }}
     >
-      <div className={`flex-1 ${showAddressForm ? 'overflow-hidden' : 'overflow-y-auto'} pt-20 pb-8 px-4 md:px-8`} data-lenis-prevent="true">
+      <div className={`flex-1 overscroll-none ${showAddressForm ? 'overflow-hidden' : 'overflow-y-auto'} pt-20 pb-8 px-4 md:px-8`} data-lenis-prevent="true">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <button

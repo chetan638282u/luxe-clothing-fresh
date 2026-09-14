@@ -1,5 +1,6 @@
 html {
   background: #d9d4c7;
+  overscroll-behavior: none;
 }
 html, body, #root {
   margin: 0;

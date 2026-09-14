@@ -101,7 +101,7 @@ export default function AccessoriesCollection({ onClose, hash }) {
       animate={{ opacity: 1 }}
       exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { display: 'none', opacity: 0, transition: { duration: 0 } }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[60] bg-deep overflow-y-auto no-scrollbar"
+      className="fixed inset-0 z-[60] bg-deep overflow-y-auto overscroll-none no-scrollbar"
       style={{ contain: 'paint layout' }}
       data-lenis-prevent="true"
     >
