@@ -133,8 +133,10 @@ function App() {
   useEffect(() => {
     if (showWomen || showMen || showAccessories || showNewArrivals || showCheckout || wishlistOpen || cartOpen) {
       document.body.style.overflow = 'hidden'
+      if (window.lenis) window.lenis.stop()
     } else {
       document.body.style.overflow = ''
+      if (window.lenis) window.lenis.start()
       // Refresh ScrollTrigger to prevent layout thrashing on mobile after scroll lock is removed
       ScrollTrigger.refresh()
     }
