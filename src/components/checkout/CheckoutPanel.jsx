@@ -18,7 +18,7 @@ export default function CheckoutPanel({ open, onClose }) {
 
   const total = grouped.reduce((sum, item) => {
     const num = parseInt(item.price.replace(/[^0-9]/g, ''))
-    return sum + (isNaN(num) ? 0 : num * item.count)
+    return sum + (isNaN(num) ? 0 : num * (item.count || 1))
   }, 0)
 
   const handleChange = (field) => (e) => setForm({ ...form, [field]: e.target.value })
@@ -109,12 +109,12 @@ export default function CheckoutPanel({ open, onClose }) {
                                 <p className="text-black font-semibold text-xs mt-0.5">{item.price}</p>
                                 <div className="flex items-center gap-2 mt-2">
                                   <button
-                                    onClick={() => { if (item.count <= 1) { removeFromCheckoutByNameAndSize(item.name, item.size) } else { decrementFromCheckoutByKey(item.name, item.size) } }}
+                                    onClick={() => { if ((item.count || 1) <= 1) { removeFromCheckoutByNameAndSize(item.name, item.size) } else { decrementFromCheckoutByKey(item.name, item.size) } }}
                                     className="w-5 h-5 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"
                                   >
                                     <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12" /></svg>
                                   </button>
-                                  <span className="text-ivory text-xs w-3 text-center">{item.count}</span>
+                                  <span className="text-ivory text-xs w-3 text-center">{item.count || 1}</span>
                                   <button
                                     onClick={() => incrementInCheckout(item)}
                                     className="w-5 h-5 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center"

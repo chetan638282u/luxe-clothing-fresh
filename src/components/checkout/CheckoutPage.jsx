@@ -45,7 +45,7 @@ export default function CheckoutPage({ onClose }) {
 
   const rawTotal = grouped.reduce((sum, item) => {
     const num = parseInt(item.price.replace(/[^0-9]/g, ''))
-    return sum + (num * item.count)
+    return sum + (num * (item.count || 1))
   }, 0)
 
   const discount = Math.floor(rawTotal * 0.15)
@@ -189,10 +189,10 @@ export default function CheckoutPage({ onClose }) {
       animate={{ opacity: 1 }}
       exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { display: 'none', opacity: 0, transition: { duration: 0 } }}
       transition={{ duration: 0.3 }}
-      className={`fixed inset-0 z-[110] ${showAddressForm ? 'overflow-hidden' : 'overflow-y-auto'} bg-deep pt-20 pb-32 px-4 md:px-8`}
+      className="fixed inset-0 z-[110] bg-deep flex flex-col"
       style={{ contain: 'paint layout', willChange: 'transform' }}
-      data-lenis-prevent="true"
     >
+      <div className={`flex-1 ${showAddressForm ? 'overflow-hidden' : 'overflow-y-auto'} pt-20 pb-8 px-4 md:px-8`} data-lenis-prevent="true">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <button
@@ -222,15 +222,11 @@ export default function CheckoutPage({ onClose }) {
             {/* LEFT COLUMN: ITEMS & TABS */}
             <div className="lg:col-span-8 flex flex-col gap-6">
               
-              {/* Header: My Bag & Share */}
+              {/* Header: My Bag */}
               <div className="flex justify-between items-end border-b border-ivory/10 pb-4">
                 <h2 className="font-heading text-2xl md:text-3xl text-ivory">
                   My Bag <span className="text-lg md:text-xl text-ivory/60 font-sans tracking-normal">({grouped.length} Items)</span>
                 </h2>
-                <button className="flex items-center gap-2 text-ivory/80 hover:text-gold transition-colors text-sm">
-                  Share 
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-                </button>
               </div>
 
               {/* Cart Items List */}
@@ -283,10 +279,10 @@ export default function CheckoutPage({ onClose }) {
                           <div className="flex items-center gap-3">
                             <span className="text-sm text-ivory/70">Qty:</span>
                             <div className="flex items-center border border-ivory/20 rounded-md">
-                              <button onClick={() => { if (item.count <= 1) { removeFromCheckoutByNameAndSize(item.name, item.size) } else { decrementFromCheckoutByKey(item.name, item.size) } }} className="w-8 h-8 flex items-center justify-center text-ivory/60 hover:text-ivory transition-colors">
+                              <button onClick={() => { if ((item.count || 1) <= 1) { removeFromCheckoutByNameAndSize(item.name, item.size) } else { decrementFromCheckoutByKey(item.name, item.size) } }} className="w-8 h-8 flex items-center justify-center text-ivory/60 hover:text-ivory transition-colors">
                                 -
                               </button>
-                              <span className="text-ivory text-sm w-6 text-center font-mono">{item.count}</span>
+                              <span className="text-ivory text-sm w-6 text-center font-mono">{item.count || 1}</span>
                               <button onClick={() => incrementInCheckout(item)} className="w-8 h-8 flex items-center justify-center text-ivory/60 hover:text-ivory transition-colors">
                                 +
                               </button>
@@ -469,10 +465,11 @@ export default function CheckoutPage({ onClose }) {
           </div>
         )}
       </div>
+      </div>
 
       {/* Sticky Bottom Bar for Mobile */}
       {items.length > 0 && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-deep border-t border-ivory/10 p-4 z-[90]">
+        <div className="md:hidden shrink-0 bg-deep border-t border-ivory/10 p-4 z-[90]">
           <button
             onClick={handleProceedToAddress}
             className="w-full bg-[#b3401e] text-white hover:bg-[#963519] transition-all py-4 px-4 text-xs tracking-widest uppercase font-bold rounded-lg flex justify-center items-center shadow-lg"

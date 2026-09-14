@@ -93,16 +93,16 @@ export default function CartPanel({ open, onClose }) {
                         </div>
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => { if (item.count <= 1) { removeFromBagByNameAndSize(item.name, item.size); showToast('Removed from Cart') } else { removeOneFromBagByKey(item.name, item.size) } }}
+                            onClick={() => { if ((item.count || 1) <= 1) { removeFromBagByNameAndSize(item.name, item.size); showToast('Removed from Cart') } else { removeOneFromBagByKey(item.name, item.size) } }}
                             className="w-6 h-6 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center text-xs"
                           >
-                            {item.count <= 1 ? (
+                            {((item.count || 1) <= 1) ? (
                               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400/80 group-hover:text-red-400"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                             ) : (
                               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12" /></svg>
                             )}
                           </button>
-                          <span className="text-ivory text-xs w-4 text-center">{item.count}</span>
+                          <span className="text-ivory text-xs w-4 text-center">{item.count || 1}</span>
                           <button
                             onClick={() => { addToBag(item); showToast(`${item.name} added to Bag`) }}
                             className="w-6 h-6 rounded-full border border-black/15 text-ivory/60 hover:border-gold/50 hover:text-gold transition-all flex items-center justify-center text-xs"
