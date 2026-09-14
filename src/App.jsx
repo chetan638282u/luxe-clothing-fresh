@@ -28,6 +28,8 @@ function App() {
   const [showMen, setShowMen] = useState(false)
   const [showAccessories, setShowAccessories] = useState(false)
   const [showNewArrivals, setShowNewArrivals] = useState(false)
+  const [skipAnimation, setSkipAnimation] = useState(false)
+  const previousProductRef = useRef(false)
   const [wishlistOpen, setWishlistOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [showCheckout, setShowCheckout] = useState(false)
@@ -158,10 +160,24 @@ function App() {
       setWishlistOpen(views.includes('wishlist'))
       
       const productIndex = views.indexOf('product')
-      if (productIndex !== -1 && views.length > productIndex + 1) {
+      const isProduct = productIndex !== -1 && views.length > productIndex + 1
+      
+      // If we are currently on a product, and the new view is NOT a product, we are going back
+      if (previousProductRef.current && !isProduct) {
+        setSkipAnimation(true)
+      } else if (!previousProductRef.current && isProduct) {
+        // Reset it when we navigate to a product, or you can just reset it on a timeout
+        setSkipAnimation(false)
+      } else if (!previousProductRef.current && !isProduct) {
+        setSkipAnimation(false)
+      }
+
+      if (isProduct) {
         setCurrentProductSlug(views[productIndex + 1])
+        previousProductRef.current = true
       } else {
         setCurrentProductSlug(null)
+        previousProductRef.current = false
       }
     }
     
@@ -259,10 +275,10 @@ function App() {
       </motion.div>
 
       <AnimatePresence>
-        {showWomen && <WomenCollection key="women" hash="women" onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
-        {showMen && <MenCollection key="men" hash="men" onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
-        {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
-        {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
+        {showWomen && <WomenCollection key="women" hash="women" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
+        {showMen && <MenCollection key="men" hash="men" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
+        {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
+        {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
         {showCheckout && <CheckoutPage key="checkout" onClose={() => window.dispatchEvent(new Event('close-checkout'))} />}
       </AnimatePresence>
 

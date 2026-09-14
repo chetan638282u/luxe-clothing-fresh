@@ -94,7 +94,7 @@ function ProductCardWrapper({ product, onSelect }) {
   return <ProductCard product={product} onSelect={onSelect} hovered={hovered} onHover={setHovered} />
 }
 
-export default function WomenCollection({ onClose, hash }) {
+export default function WomenCollection({ onClose, hash, skipAnimation }) {
   const isMobile = useMediaQuery('(max-width: 767px)')
 
   const handleSelect = (product) => {
@@ -104,7 +104,7 @@ export default function WomenCollection({ onClose, hash }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={{ opacity: skipAnimation ? 1 : 0 }}
       animate={{ opacity: 1 }}
       exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { display: 'none', opacity: 0, transition: { duration: 0 } }}
       transition={{ duration: 0.3 }}
