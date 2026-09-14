@@ -94,12 +94,12 @@ function ProductCardWrapper({ product, onSelect }) {
   return <ProductCard product={product} onSelect={onSelect} hovered={hovered} onHover={setHovered} />
 }
 
-export default function MenCollection({ onClose, hash, skipAnimation }) {
+export default function MenCollection({ onClose, hash, skipAnimation, isHidden }) {
   const isMobile = useMediaQuery('(max-width: 767px)')
 
   const handleSelect = (product) => {
     const slug = product.name.replace(/\s+/g, '-').toLowerCase()
-    window.location.hash = '#product/' + slug
+    window.location.hash = '#' + hash + '/product/' + slug
   }
 
   return (
@@ -109,7 +109,7 @@ export default function MenCollection({ onClose, hash, skipAnimation }) {
       exit={isMobile ? { display: 'none', opacity: 0, transition: { duration: 0 } } : { display: 'none', opacity: 0, transition: { duration: 0 } }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[60] bg-deep overflow-y-auto overscroll-contain no-scrollbar"
-      style={{ contain: 'paint layout' }}
+      style={{ contain: 'paint layout', display: isHidden ? 'none' : 'block' }}
       data-lenis-prevent="true"
     >
       <div className="min-h-full flex flex-col px-6">

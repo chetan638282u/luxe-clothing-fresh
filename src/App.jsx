@@ -133,7 +133,8 @@ function App() {
 
   // Lock body scroll when any overlay is active
   useEffect(() => {
-    if (showWomen || showMen || showAccessories || showNewArrivals || showCheckout || wishlistOpen || cartOpen) {
+    const anyCollectionVisible = (showWomen || showMen || showAccessories || showNewArrivals) && !currentProductSlug;
+    if (anyCollectionVisible || showCheckout || wishlistOpen || cartOpen) {
       document.body.style.overflow = 'hidden'
       if (window.lenis) window.lenis.stop()
     } else {
@@ -146,7 +147,7 @@ function App() {
     return () => {
       document.body.style.overflow = ''
     }
-  }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen])
+  }, [showWomen, showMen, showAccessories, showNewArrivals, showCheckout, wishlistOpen, cartOpen, currentProductSlug])
   useEffect(() => {
     const syncFromHash = () => {
       const hash = window.location.hash.slice(1)
@@ -275,10 +276,10 @@ function App() {
       </motion.div>
 
       <AnimatePresence>
-        {showWomen && <WomenCollection key="women" hash="women" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
-        {showMen && <MenCollection key="men" hash="men" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
-        {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
-        {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" skipAnimation={skipAnimation} onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
+        {showWomen && <WomenCollection key="women" hash="women" skipAnimation={skipAnimation} isHidden={!!currentProductSlug} onClose={() => window.dispatchEvent(new Event('close-women-collection'))} />}
+        {showMen && <MenCollection key="men" hash="men" skipAnimation={skipAnimation} isHidden={!!currentProductSlug} onClose={() => window.dispatchEvent(new Event('close-men-collection'))} />}
+        {showAccessories && <AccessoriesCollection key="accessories" hash="accessories" skipAnimation={skipAnimation} isHidden={!!currentProductSlug} onClose={() => window.dispatchEvent(new Event('close-accessories-collection'))} />}
+        {showNewArrivals && <NewArrivalsCollection key="newarrivals" hash="newarrivals" skipAnimation={skipAnimation} isHidden={!!currentProductSlug} onClose={() => window.dispatchEvent(new Event('close-newarrivals-collection'))} />}
         {showCheckout && <CheckoutPage key="checkout" onClose={() => window.dispatchEvent(new Event('close-checkout'))} />}
       </AnimatePresence>
 
