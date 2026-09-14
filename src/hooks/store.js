@@ -8,54 +8,40 @@ export const useStore = create(persist((set) => ({
   checkoutItems: [],
 
   addToBag: (product) => set((state) => {
-    const newItems = [...state.bagItems, { name: product.name, price: product.price, image: product.image, size: product.size }]
-    return { bagItems: newItems, bagCount: state.bagCount + 1 }
-  }),
-  
-  removeFromBag: (index) => set((state) => {
-    const newItems = [...state.bagItems]
-    newItems.splice(index, 1)
-    return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - 1) }
-  }),
-
-  removeFromBagByName: (name) => set((state) => {
-    const newItems = state.bagItems.filter(i => i.name !== name)
-    return { bagItems: newItems, bagCount: newItems.length }
-  }),
-
-  removeFromBagByNameAndSize: (name, size) => set((state) => {
-    const newItems = state.bagItems.filter(i => !(i.name === name && i.size === size))
-    return { bagItems: newItems, bagCount: newItems.length }
-  }),
-
-  removeOneFromBag: (name) => set((state) => {
-    const idx = state.bagItems.findIndex(i => i.name === name)
+    const size = product.size || 'M'
+    const idx = state.bagItems.findIndex(i => i.name === product.name && i.size === size)
+    const qty = product.quantity || 1
+    
     if (idx >= 0) {
       const newItems = [...state.bagItems]
-      newItems.splice(idx, 1)
-      return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - 1) }
+      newItems[idx] = { ...newItems[idx], count: newItems[idx].count + qty }
+      return { bagItems: newItems, bagCount: state.bagCount + qty }
+    } else {
+      const newItems = [...state.bagItems, { name: product.name, price: product.price, image: product.image, size, count: qty }]
+      return { bagItems: newItems, bagCount: state.bagCount + qty }
     }
-    return state
+  }),
+  
+  removeFromBagByNameAndSize: (name, size) => set((state) => {
+    const item = state.bagItems.find(i => i.name === name && i.size === size)
+    const countToRemove = item ? item.count : 0
+    const newItems = state.bagItems.filter(i => !(i.name === name && i.size === size))
+    return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - countToRemove) }
   }),
 
   removeOneFromBagByKey: (name, size) => set((state) => {
     const idx = state.bagItems.findIndex(i => i.name === name && i.size === size)
     if (idx >= 0) {
       const newItems = [...state.bagItems]
-      newItems.splice(idx, 1)
-      return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - 1) }
+      if (newItems[idx].count > 1) {
+        newItems[idx] = { ...newItems[idx], count: newItems[idx].count - 1 }
+        return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - 1) }
+      } else {
+        newItems.splice(idx, 1)
+        return { bagItems: newItems, bagCount: Math.max(0, state.bagCount - 1) }
+      }
     }
     return state
-  }),
-
-  removeFromCheckout: (index) => set((state) => {
-    const newItems = [...state.checkoutItems]
-    newItems.splice(index, 1)
-    return { checkoutItems: newItems }
-  }),
-
-  removeFromCheckoutByName: (name) => set((state) => {
-    return { checkoutItems: state.checkoutItems.filter(i => i.name !== name) }
   }),
 
   removeFromCheckoutByNameAndSize: (name, size) => set((state) => {
@@ -63,14 +49,11 @@ export const useStore = create(persist((set) => ({
   }),
 
   incrementInCheckout: (item) => set((state) => {
-    return { checkoutItems: [...state.checkoutItems, { name: item.name, price: item.price, image: item.image, size: item.size }] }
-  }),
-
-  decrementFromCheckout: (name) => set((state) => {
-    const idx = state.checkoutItems.findIndex(i => i.name === name)
+    const size = item.size || 'M'
+    const idx = state.checkoutItems.findIndex(i => i.name === item.name && i.size === size)
     if (idx >= 0) {
       const newItems = [...state.checkoutItems]
-      newItems.splice(idx, 1)
+      newItems[idx] = { ...newItems[idx], count: newItems[idx].count + 1 }
       return { checkoutItems: newItems }
     }
     return state
@@ -80,8 +63,13 @@ export const useStore = create(persist((set) => ({
     const idx = state.checkoutItems.findIndex(i => i.name === name && i.size === size)
     if (idx >= 0) {
       const newItems = [...state.checkoutItems]
-      newItems.splice(idx, 1)
-      return { checkoutItems: newItems }
+      if (newItems[idx].count > 1) {
+        newItems[idx] = { ...newItems[idx], count: newItems[idx].count - 1 }
+        return { checkoutItems: newItems }
+      } else {
+        newItems.splice(idx, 1)
+        return { checkoutItems: newItems }
+      }
     }
     return state
   }),

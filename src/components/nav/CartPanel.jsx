@@ -6,12 +6,7 @@ export default function CartPanel({ open, onClose }) {
   const isMobile = useMediaQuery('(max-width: 767px)')
   const items = useStore(state => state.bagItems)
 
-  const grouped = items.reduce((acc, item) => {
-    const existing = acc.find(i => i.name === item.name && i.size === item.size)
-    if (existing) existing.count++
-    else acc.push({ ...item, count: 1 })
-    return acc
-  }, [])
+  const grouped = items
 
   const overlay = (
     <motion.div

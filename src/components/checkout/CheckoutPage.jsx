@@ -41,12 +41,7 @@ export default function CheckoutPage({ onClose }) {
     setRandomProducts(shuffled.slice(0, 4))
   }, [])
 
-  const grouped = items.reduce((acc, item) => {
-    const existing = acc.find(i => i.name === item.name && i.size === item.size)
-    if (existing) existing.count++
-    else acc.push({ ...item, count: 1 })
-    return acc
-  }, [])
+  const grouped = items
 
   const rawTotal = grouped.reduce((sum, item) => {
     const num = parseInt(item.price.replace(/[^0-9]/g, ''))
