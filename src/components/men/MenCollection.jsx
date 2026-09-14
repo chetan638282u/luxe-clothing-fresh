@@ -31,11 +31,7 @@ function ProductCard({ product, onSelect, hovered, onHover }) {
       </div>
 
       <div className="mt-4 flex flex-col items-start px-1">
-        {product.season && (
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2 rounded bg-rose-50 text-rose-900 text-[10px] font-medium tracking-wide">
-            ✨ {product.season.charAt(0).toUpperCase() + product.season.slice(1)} Collection
-          </span>
-        )}
+
         <h3 className="font-heading text-sm text-ivory mb-1">{product.name}</h3>
         <p className="text-ivory/60 text-xs mb-4">{product.price}</p>
         
