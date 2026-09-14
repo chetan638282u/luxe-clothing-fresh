@@ -91,7 +91,7 @@ export default function ProductPage({ productSlug }) {
 
   return (
     <>
-      <div className="min-h-screen pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto text-ivory">
+      <div className="min-h-screen pt-24 md:pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto text-ivory">
         <div className="mb-6 md:mb-10">
           <button 
             onClick={() => window.history.back()} 
