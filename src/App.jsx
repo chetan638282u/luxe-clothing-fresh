@@ -296,7 +296,7 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-28 left-1/2 -translate-x-1/2 z-[100] glass px-6 py-3 rounded-lg text-sm text-ivory/90 whitespace-nowrap"
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] bg-charcoal border border-ivory/10 shadow-2xl px-6 py-4 text-sm text-ivory whitespace-nowrap"
           >
             {toast.message}
           </motion.div>

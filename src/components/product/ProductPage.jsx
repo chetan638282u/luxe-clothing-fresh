@@ -14,11 +14,12 @@ const allProducts = [
 // Get unique products by name to avoid duplicates in related section
 const uniqueProducts = Array.from(new Map(allProducts.map(item => [item.name, item])).values())
 
-const sizes = ['S', 'M', 'L', 'XL', 'XXL']
+const defaultSizes = ['S', 'M', 'L', 'XL', 'XXL']
+const shoeSizes = ['7', '8', '9', '10', '11', '12']
 
 export default function ProductPage({ productSlug }) {
   const [product, setProduct] = useState(null)
-  const [selectedSize, setSelectedSize] = useState('M')
+  const [selectedSize, setSelectedSize] = useState('')
   const [qty, setQty] = useState(1)
   const [relatedProducts, setRelatedProducts] = useState([])
   const [showSizeGuide, setShowSizeGuide] = useState(false)
@@ -32,11 +33,17 @@ export default function ProductPage({ productSlug }) {
     if (foundProduct) {
       setProduct(foundProduct)
       
+      const isShoe = /shoe|boot|sneaker|loafer/i.test(foundProduct.name)
+      setSelectedSize(isShoe ? '9' : 'M')
+
       // Get 4 random related products (excluding current one)
       const others = uniqueProducts.filter(p => p.name !== foundProduct.name)
       setRelatedProducts(others.slice(0, 4))
     }
   }, [productSlug])
+
+  const isShoe = product ? /shoe|boot|sneaker|loafer/i.test(product.name) : false
+  const currentSizes = isShoe ? shoeSizes : defaultSizes
 
   // Scroll to top when product changes
   useEffect(() => {
@@ -145,7 +152,7 @@ export default function ProductPage({ productSlug }) {
           </div>
 
           <div className="flex flex-wrap gap-2 mb-8">
-            {sizes.map((s) => (
+            {currentSizes.map((s) => (
               <button
                 key={s}
                 onClick={() => setSelectedSize(s)}
@@ -290,48 +297,53 @@ export default function ProductPage({ productSlug }) {
                   <thead className="text-xs uppercase bg-black/40 text-ivory/70">
                     <tr>
                       <th className="px-4 py-3 rounded-tl">Size</th>
-                      <th className="px-4 py-3">US Size</th>
-                      <th className="px-4 py-3">Chest (in)</th>
-                      <th className="px-4 py-3">Waist (in)</th>
-                      <th className="px-4 py-3 rounded-tr">Hips (in)</th>
+                      <th className="px-4 py-3">{isShoe ? 'EU Size' : 'US Size'}</th>
+                      <th className="px-4 py-3">{isShoe ? 'UK Size' : 'Chest (in)'}</th>
+                      <th className="px-4 py-3">{isShoe ? 'Foot Length (in)' : 'Waist (in)'}</th>
+                      {!isShoe && <th className="px-4 py-3 rounded-tr">Hips (in)</th>}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-ivory/10">
-                    <tr className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gold">S</td>
-                      <td className="px-4 py-3">4 - 6</td>
-                      <td className="px-4 py-3">34 - 35</td>
-                      <td className="px-4 py-3">26 - 27</td>
-                      <td className="px-4 py-3">36 - 37</td>
-                    </tr>
-                    <tr className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gold">M</td>
-                      <td className="px-4 py-3">8 - 10</td>
-                      <td className="px-4 py-3">36 - 37</td>
-                      <td className="px-4 py-3">28 - 29</td>
-                      <td className="px-4 py-3">38 - 39</td>
-                    </tr>
-                    <tr className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gold">L</td>
-                      <td className="px-4 py-3">12 - 14</td>
-                      <td className="px-4 py-3">38 - 40</td>
-                      <td className="px-4 py-3">30 - 32</td>
-                      <td className="px-4 py-3">40 - 42</td>
-                    </tr>
-                    <tr className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gold">XL</td>
-                      <td className="px-4 py-3">16 - 18</td>
-                      <td className="px-4 py-3">41 - 43</td>
-                      <td className="px-4 py-3">33 - 35</td>
-                      <td className="px-4 py-3">43 - 45</td>
-                    </tr>
-                    <tr className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gold">XXL</td>
-                      <td className="px-4 py-3">20 - 22</td>
-                      <td className="px-4 py-3">44 - 46</td>
-                      <td className="px-4 py-3">36 - 38</td>
-                      <td className="px-4 py-3">46 - 48</td>
-                    </tr>
+                    {isShoe ? (
+                      <>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">7</td><td className="px-4 py-3">40</td><td className="px-4 py-3">6</td><td className="px-4 py-3">9.8</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">8</td><td className="px-4 py-3">41</td><td className="px-4 py-3">7</td><td className="px-4 py-3">10.1</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">9</td><td className="px-4 py-3">42</td><td className="px-4 py-3">8</td><td className="px-4 py-3">10.4</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">10</td><td className="px-4 py-3">43</td><td className="px-4 py-3">9</td><td className="px-4 py-3">10.7</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">11</td><td className="px-4 py-3">44</td><td className="px-4 py-3">10</td><td className="px-4 py-3">11.0</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">12</td><td className="px-4 py-3">45</td><td className="px-4 py-3">11</td><td className="px-4 py-3">11.3</td>
+                        </tr>
+                      </>
+                    ) : (
+                      <>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">S</td><td className="px-4 py-3">4 - 6</td><td className="px-4 py-3">34 - 35</td><td className="px-4 py-3">26 - 27</td><td className="px-4 py-3">36 - 37</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">M</td><td className="px-4 py-3">8 - 10</td><td className="px-4 py-3">36 - 37</td><td className="px-4 py-3">28 - 29</td><td className="px-4 py-3">38 - 39</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">L</td><td className="px-4 py-3">12 - 14</td><td className="px-4 py-3">38 - 40</td><td className="px-4 py-3">30 - 32</td><td className="px-4 py-3">40 - 42</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">XL</td><td className="px-4 py-3">16 - 18</td><td className="px-4 py-3">41 - 43</td><td className="px-4 py-3">33 - 35</td><td className="px-4 py-3">43 - 45</td>
+                        </tr>
+                        <tr className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gold">XXL</td><td className="px-4 py-3">20 - 22</td><td className="px-4 py-3">44 - 46</td><td className="px-4 py-3">36 - 38</td><td className="px-4 py-3">46 - 48</td>
+                        </tr>
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
