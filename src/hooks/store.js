@@ -109,7 +109,10 @@ export const toggleWishlist = (product) => useStore.getState().toggleWishlist(pr
 export const clearBag = () => useStore.getState().clearBag()
 export const isWishlisted = (name) => useStore.getState().wishlist.some(p => p.name === name)
 
-export const getBagCount = () => useStore.getState().bagCount
+export const getBagCount = () => {
+  const items = useStore.getState().bagItems
+  return items.reduce((acc, item) => acc + (item.count || 1), 0)
+}
 export const getBagItems = () => useStore.getState().bagItems
 export const getWishlist = () => useStore.getState().wishlist
 export const getCheckoutItems = () => useStore.getState().checkoutItems

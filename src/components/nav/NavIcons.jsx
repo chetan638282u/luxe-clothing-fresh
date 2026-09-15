@@ -12,7 +12,8 @@ function IconButton({ children, className = '', ...props }) {
 }
 
 export default function NavIcons({ searchOpen, onSearchToggle }) {
-  const bagCount = useStore(state => state.bagCount)
+  const bagItems = useStore(state => state.bagItems)
+  const bagCount = bagItems.reduce((acc, item) => acc + (item.count || 1), 0)
   const wishlist = useStore(state => state.wishlist)
 
   return (

@@ -13,7 +13,7 @@ const suggestedQuestions = [
 function buildSystemPrompt() {
   const bagItems = getBagItems()
   const wishlist = getWishlist()
-  const bagCount = getBagCount()
+  const bagCount = bagItems.reduce((acc, item) => acc + (item.count || 1), 0)
 
   const catalogStr = [
     'BEST SELLERS: ' + bestSellersProducts.map(p => `${p.name} ${p.price}`).join(', '),
